@@ -5,13 +5,25 @@ results are recorded here, separate from the automated tests.
 
 ## Install format
 
-A `.bundle` in `~/Library/Keyboard Layouts` was not loaded after logout
-(absent from `TISCreateInputSourceList`), while the identical `.keylayout` as a
-standalone file loads at once via `TISRegisterInputSource`. neoneo therefore
-installs the standalone file (ID `org.unknown.keylayout.neoneo`, listed under
-Others). Why the bundle failed is open. The layout only appears in Settings
-after it is added to `com.apple.HIToolbox AppleEnabledInputSources` and the
-user logs out and in; `make install` does the first part.
+- **Bundle identifier must contain `.keyboardlayout.`** (Apple TN2056). Bundles
+  with `com.mi-skam.keylayout.…` or `xyz.miskam.keylayout.…` were ignored
+  silently after logout and restart, in `~/Library` and `/Library` alike, with
+  nothing in the logs. `xyz.miskam.keyboardlayout.neoneo` loads (2026-11-16).
+- **The input source id is derived:** `<bundle id>.keylayout.<name>`, here
+  `xyz.miskam.keyboardlayout.neoneo.keylayout.neoneo`. KLInfo
+  `TISInputSourceID` is ignored (the official Neo bundle shows the same).
+- **Template icon:** `TISIconIsTemplate` in KLInfo makes the "nn" icon follow
+  the menu bar colour. `TICapsLockLanguageSwitchCapable = false` keeps macOS
+  from ever using Caps Lock to switch to ABC.
+- A standalone `.keylayout` loads too (id `org.unknown.keylayout.<name>`, no
+  template icon); v0.1 used it until the bundle id was fixed.
+- Bundles are only picked up at login; `TISRegisterInputSource` registers a
+  standalone `.keylayout` at once but not a bundle.
+- The layout must also be in `com.apple.HIToolbox AppleEnabledInputSources`;
+  `make install` adds it.
+- **Never delete the selected layout's files.** Every app then crashes when
+  activated (`_TSMSetInputSourceSelected` on a NULL id) until another layout is
+  selected. `make uninstall` selects Apple's German layout first.
 
 The Karabiner rules match the input source ID exactly. With a wrong ID they
 silently do nothing, while plain Caps Lock still gives layer 3 from the layout
@@ -74,12 +86,13 @@ without Karabiner, Caps Lock does nothing on that keyboard.
 
 ## Full layout v0.1
 
-Installed with `make install` (standalone `neoneo.keylayout`, input source ID
-`org.unknown.keylayout.neoneo`, added to `AppleEnabledInputSources`), then log
-out and in and enable both "neoneo" rules in Karabiner.
+Installed with `make install` (`neoneo.bundle`, input source ID
+`xyz.miskam.keyboardlayout.neoneo.keylayout.neoneo`, added to
+`AppleEnabledInputSources`), then log out and in and enable both "neoneo"
+rules in Karabiner.
 
-`make verify` (automated, 2026-11-16): ok, all 128 key codes × 10 states match
-the TSV.
+`make verify` (automated, 2026-11-16, bundle install): ok, all 128 key codes ×
+10 states match the TSV. Menu bar shows the "nn" template icon (operator).
 
 Hand checks on the full layout (repeat the mechanism checks with the real keys):
 _pending_.

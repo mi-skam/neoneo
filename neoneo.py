@@ -206,11 +206,39 @@ def keylayout_xml(
     return "\n".join(lines)
 
 
-def write_keylayout(out: Path, xml: str) -> Path:
-    out.mkdir(parents=True, exist_ok=True)
-    path = out / "neoneo.keylayout"
-    path.write_text(xml, encoding="utf-8")
-    return path
+# macOS only loads layout bundles whose identifier contains ".keyboardlayout."
+# (Apple TN2056), and it derives the input source id as <bundle id>.keylayout.<name>
+# (KLInfo TISInputSourceID is ignored).
+BUNDLE_ID = "xyz.miskam.keyboardlayout.neoneo"
+INPUT_SOURCE = BUNDLE_ID + ".keylayout.neoneo"
+VERSION = "0.1"
+
+
+def write_bundle(out: Path, xml: str, icns: Path) -> Path:
+    """Write out/neoneo.bundle, modelled on the official Neo bundle."""
+    import plistlib
+    import shutil
+
+    bundle = out / "neoneo.bundle"
+    res = bundle / "Contents" / "Resources"
+    (res / "de.lproj").mkdir(parents=True, exist_ok=True)
+    (res / "neoneo.keylayout").write_text(xml, encoding="utf-8")
+    shutil.copyfile(icns, res / "neoneo.icns")
+    (res / "de.lproj" / "InfoPlist.strings").write_text('"neoneo" = "neoneo";\n', encoding="utf-16")
+    info = {
+        "CFBundleIdentifier": BUNDLE_ID,
+        "CFBundleName": "neoneo",
+        "CFBundleVersion": VERSION,
+        "CFBundleShortVersionString": VERSION,
+        "KLInfo_neoneo": {
+            "TISIntendedLanguage": "de",
+            "TISIconIsTemplate": True,
+            # Never let macOS use Caps Lock to switch to ABC: Caps is Mod3.
+            "TICapsLockLanguageSwitchCapable": False,
+        },
+    }
+    (bundle / "Contents" / "Info.plist").write_bytes(plistlib.dumps(info))
+    return bundle
 
 
 # Values from docs/quirks.md (mechanism checks, 2026-11-16).
@@ -222,7 +250,7 @@ ISO_SWAP_DEVICES: List[dict] = [
     {"vendor_id": 1452, "product_id": 835},  # Apple internal
     {"vendor_id": 76, "product_id": 615},  # Apple Magic Keyboard, Bluetooth
 ]
-INPUT_SOURCE_ID = "^org\\.unknown\\.keylayout\\.neoneo$"
+INPUT_SOURCE_ID = "^" + INPUT_SOURCE.replace(".", "\\.") + "$"
 CARET_KEY = "grave_accent_and_tilde"
 SWAPPED_CARET_KEY = "non_us_backslash"
 
@@ -331,7 +359,7 @@ def build(out: Path) -> None:
 
     keys, option, base = _sources()
     xml = keylayout_xml(keys, option, base)
-    write_keylayout(out, xml)
+    write_bundle(out, xml, ROOT / "layout" / "neoneo.icns")
     (out / "karabiner-neoneo.json").write_text(
         json.dumps(karabiner_rules(keys), indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
@@ -344,7 +372,7 @@ def main(argv: List[str]) -> int:
 
     parser = argparse.ArgumentParser(prog="neoneo.py")
     sub = parser.add_subparsers(dest="command", required=True)
-    b = sub.add_parser("build", help="write neoneo.keylayout and karabiner-neoneo.json")
+    b = sub.add_parser("build", help="write neoneo.bundle and karabiner-neoneo.json")
     b.add_argument("--out", type=Path, required=True)
     v = sub.add_parser("verify", help="compare a dump-layout.swift dump with the TSV")
     v.add_argument("dump", type=Path)

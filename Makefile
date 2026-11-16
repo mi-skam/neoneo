@@ -1,9 +1,9 @@
 LAYOUTS := $(HOME)/Library/Keyboard Layouts
 KARABINER := $(HOME)/.config/karabiner/assets/complex_modifications
-LAYOUT := $(LAYOUTS)/neoneo.keylayout
+BUNDLE := $(LAYOUTS)/neoneo.bundle
 AGENT := $(HOME)/Library/LaunchAgents/neoneo.capslockdelay.plist
 
-.PHONY: test build install uninstall verify dump
+.PHONY: test build icon install uninstall verify dump
 
 test:
 	python3 -m unittest discover -s tests -v
@@ -11,11 +11,14 @@ test:
 build:
 	python3 neoneo.py build --out build
 
+# Regenerate layout/neoneo.icns (committed; only needed after changing the design).
+icon:
+	swift tools/make-icon.swift layout/neoneo.icns
+
 install: build
 	mkdir -p "$(LAYOUTS)" "$(KARABINER)"
-	cp build/neoneo.keylayout "$(LAYOUT)"
+	cp -R build/neoneo.bundle "$(LAYOUTS)/"
 	cp build/karabiner-neoneo.json "$(KARABINER)/neoneo.json"
-	swift tools/register-layout.swift "$(LAYOUT)"
 	python3 tools/enabled-sources.py add neoneo -24601
 	cp tools/neoneo.capslockdelay.plist "$(AGENT)"
 	-launchctl bootout gui/$$(id -u) "$(AGENT)" 2>/dev/null
@@ -24,7 +27,8 @@ install: build
 	@echo "then enable both 'neoneo' rules in Karabiner > Complex Modifications."
 
 uninstall:
-	rm "$(LAYOUT)"
+	swift tools/select-layout.swift com.apple.keylayout.German
+	rm -r "$(BUNDLE)"
 	rm "$(KARABINER)/neoneo.json"
 	python3 tools/enabled-sources.py remove neoneo
 	launchctl bootout gui/$$(id -u) "$(AGENT)"
@@ -34,7 +38,7 @@ uninstall:
 # Compare the installed layout with the TSV.
 verify:
 	mkdir -p build
-	swift tools/dump-layout.swift org.unknown.keylayout.neoneo > build/installed.tsv
+	swift tools/dump-layout.swift xyz.miskam.keyboardlayout.neoneo.keylayout.neoneo > build/installed.tsv
 	python3 neoneo.py verify build/installed.tsv
 
 # make dump ID=com.apple.keylayout.German

@@ -15,7 +15,7 @@ KEYS = load_layout(ROOT / "layout" / "neoneo.tsv")
 RULES = karabiner_rules(KEYS)
 MODS, LAYER4 = RULES["rules"]
 INPUT_SOURCE = {"type": "input_source_if",
-                "input_sources": [{"input_source_id": "^org\\.unknown\\.keylayout\\.neoneo$"}]}
+                "input_sources": [{"input_source_id": "^xyz\\.miskam\\.keyboardlayout\\.neoneo\\.keylayout\\.neoneo$"}]}
 
 
 def var(name: str, value: int) -> dict:

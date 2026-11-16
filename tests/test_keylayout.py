@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import plistlib
 import re
 import sys
 import tempfile
@@ -10,7 +11,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from neoneo import Key, keylayout_xml, load_base, load_layout, load_option, write_keylayout  # noqa: E402
+from neoneo import Key, keylayout_xml, load_base, load_layout, load_option, write_bundle  # noqa: E402
 
 KEYS = load_layout(ROOT / "layout" / "neoneo.tsv")
 OPTION = load_option(ROOT / "layout" / "option-de.tsv")
@@ -101,12 +102,27 @@ class KeylayoutTest(unittest.TestCase):
         self.assertEqual(outputs(ROOT_EL, 0)[36], "\r")
         self.assertEqual(outputs(ROOT_EL, 0)[123], BASE[(123, "none")])
 
-    def test_write_keylayout(self):
+    def test_write_bundle(self):
         out = Path(tempfile.mkdtemp())
-        path = write_keylayout(out, "<keyboard/>")
-        self.assertEqual(path, out / "neoneo.keylayout")
-        self.assertEqual(path.read_text(encoding="utf-8"), "<keyboard/>")
-
+        icns = out / "in.icns"
+        icns.write_bytes(b"icns")
+        bundle = write_bundle(out, "<keyboard/>", icns)
+        self.assertEqual(bundle, out / "neoneo.bundle")
+        res = bundle / "Contents" / "Resources"
+        self.assertEqual((res / "neoneo.keylayout").read_text(encoding="utf-8"), "<keyboard/>")
+        self.assertEqual((res / "neoneo.icns").read_bytes(), b"icns")
+        self.assertTrue((res / "de.lproj" / "InfoPlist.strings").exists())
+        info = plistlib.loads((bundle / "Contents" / "Info.plist").read_bytes())
+        # macOS only loads layout bundles whose identifier contains ".keyboardlayout."
+        # (Apple TN2056); the spike's and the first v0.1 bundle were ignored without it.
+        self.assertEqual(info["CFBundleIdentifier"], "xyz.miskam.keyboardlayout.neoneo")
+        # macOS ignores KLInfo TISInputSourceID and derives the input source id as
+        # <bundle id>.keylayout.<name>, so the bundle does not set one.
+        self.assertEqual(info["KLInfo_neoneo"], {
+            "TISIntendedLanguage": "de",
+            "TISIconIsTemplate": True,
+            "TICapsLockLanguageSwitchCapable": False,
+        })
 
 if __name__ == "__main__":
     unittest.main()

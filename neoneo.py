@@ -201,3 +201,130 @@ def write_keylayout(out: Path, xml: str) -> Path:
     path = out / "neoneo.keylayout"
     path.write_text(xml, encoding="utf-8")
     return path
+
+
+# Values from docs/quirks.md (spike, 2026-11-16).
+MOD3_KEYS: List[str] = ["caps_lock", "backslash", "non_us_pound"]
+MOD4_KEYS: List[str] = ["non_us_backslash", "grave_accent_and_tilde", "right_command"]
+# Apple ISO keyboards report the ^ key as non_us_backslash and the < key as
+# grave_accent_and_tilde.
+ISO_SWAP_DEVICES: List[dict] = [
+    {"vendor_id": 1452, "product_id": 835},  # Apple internal
+    {"vendor_id": 76, "product_id": 615},  # Apple Magic Keyboard, Bluetooth
+]
+INPUT_SOURCE_ID = "^org\\.unknown\\.keylayout\\.neoneo$"
+CARET_KEY = "grave_accent_and_tilde"
+SWAPPED_CARET_KEY = "non_us_backslash"
+
+
+def _input_source() -> dict:
+    return {"type": "input_source_if", "input_sources": [{"input_source_id": INPUT_SOURCE_ID}]}
+
+
+def _var(name: str, value: int) -> dict:
+    return {"type": "variable_if", "name": name, "value": value}
+
+
+def _devices(kind: str) -> dict:
+    return {"type": kind, "identifiers": ISO_SWAP_DEVICES}
+
+
+# Which keyboards a modifier key name is that modifier on.
+MOD_DEVICE: Dict[str, str] = {
+    "non_us_backslash": "device_unless",
+    "grave_accent_and_tilde": "device_if",
+}
+
+
+def _manipulator(key: str, conditions: List[dict], **events) -> dict:
+    return {
+        "type": "basic",
+        "from": {"key_code": key, "modifiers": {"optional": ["any"]}},
+        "conditions": [_input_source(), *conditions],
+        **events,
+    }
+
+
+def _modifier_manipulators(key: str, mine: str, other: str) -> List[dict]:
+    device = [_devices(MOD_DEVICE[key])] if key in MOD_DEVICE else []
+    owner = dict(
+        to=[{"set_variable": {"name": mine, "value": 1}}, {"key_code": "caps_lock"}],
+        to_after_key_up=[{"set_variable": {"name": mine, "value": 0}}, {"key_code": "caps_lock"}],
+    )
+    if key == "caps_lock":
+        owner["to_if_alone"] = [{"key_code": "escape"}]
+        owner["parameters"] = {"basic.to_if_alone_timeout_milliseconds": 500}
+    return [
+        _manipulator(key, [_var(mine, 0), _var(other, 0), *device], **owner),
+        _manipulator(
+            key, [_var(mine, 0), _var(other, 1), *device],
+            to=[{"set_variable": {"name": mine, "value": 1}}, {"key_code": "left_option"}],
+            to_after_key_up=[{"set_variable": {"name": mine, "value": 0}}],
+        ),
+        _manipulator(key, [_var(mine, 1), *device], to=[{"key_code": "vk_none"}]),
+    ]
+
+
+def _layer4_manipulator(key: Key, name: str, extra: List[dict]) -> dict:
+    l4 = key.layers[3]
+    # Non-nav keys, including <none>, go through keylayout map 7 (caps+shift+option),
+    # which holds the layer-4 characters; without a rule Mod4's caps state would
+    # type layer 3.
+    to = [{"key_code": NAV[l4]}] if is_nav(l4) else [
+        {"key_code": name, "modifiers": ["left_shift", "left_option"]}]
+    return _manipulator(name, [_var("neoneo_mod4", 1), _var("neoneo_mod3", 0), *extra], to=to)
+
+
+def karabiner_rules(keys: List[Key]) -> dict:
+    mods: List[dict] = []
+    for k in MOD3_KEYS:
+        mods += _modifier_manipulators(k, "neoneo_mod3", "neoneo_mod4")
+    for k in MOD4_KEYS:
+        mods += _modifier_manipulators(k, "neoneo_mod4", "neoneo_mod3")
+    layer4: List[dict] = []
+    for key in keys:
+        if key.name == CARET_KEY:
+            layer4.append(_layer4_manipulator(key, CARET_KEY, [_devices("device_unless")]))
+            layer4.append(_layer4_manipulator(key, SWAPPED_CARET_KEY, [_devices("device_if")]))
+        else:
+            layer4.append(_layer4_manipulator(key, key.name, []))
+    return {
+        "title": "neoneo",
+        "rules": [
+            {"description": "neoneo: Mod3/Mod4 (Caps Lock state)", "manipulators": mods},
+            {"description": "neoneo: layer 4", "manipulators": layer4},
+        ],
+    }
+
+
+def build(out: Path) -> None:
+    import json
+
+    layout = ROOT / "layout"
+    keys = load_layout(layout / "neoneo.tsv")
+    xml = keylayout_xml(keys, load_option(layout / "option-de.tsv"), load_base(layout / "apple-german.tsv"))
+    write_keylayout(out, xml)
+    (out / "karabiner-neoneo.json").write_text(
+        json.dumps(karabiner_rules(keys), indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+
+
+ROOT = Path(__file__).resolve().parent
+
+
+def main(argv: List[str]) -> int:
+    import argparse
+
+    parser = argparse.ArgumentParser(prog="neoneo.py")
+    sub = parser.add_subparsers(dest="command", required=True)
+    b = sub.add_parser("build", help="write neoneo.keylayout and karabiner-neoneo.json")
+    b.add_argument("--out", type=Path, required=True)
+    args = parser.parse_args(argv)
+    if args.command == "build":
+        build(args.out)
+    return 0
+
+
+if __name__ == "__main__":
+    import sys
+
+    sys.exit(main(sys.argv[1:]))

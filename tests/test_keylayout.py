@@ -121,7 +121,6 @@ class KeylayoutTest(unittest.TestCase):
         self.assertEqual(info["KLInfo_neoneo"], {
             "TISIntendedLanguage": "de",
             "TISIconIsTemplate": True,
-            "TICapsLockLanguageSwitchCapable": False,
         })
 
 if __name__ == "__main__":

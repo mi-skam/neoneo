@@ -230,11 +230,11 @@ def write_bundle(out: Path, xml: str, icns: Path) -> Path:
         "CFBundleName": "neoneo",
         "CFBundleVersion": VERSION,
         "CFBundleShortVersionString": VERSION,
+        # No TICapsLockLanguageSwitchCapable: with it set to false, macOS drops the
+        # short Caps Lock press that turns Mod3 off, so Caps Lock sticks.
         "KLInfo_neoneo": {
             "TISIntendedLanguage": "de",
             "TISIconIsTemplate": True,
-            # Never let macOS use Caps Lock to switch to ABC: Caps is Mod3.
-            "TICapsLockLanguageSwitchCapable": False,
         },
     }
     (bundle / "Contents" / "Info.plist").write_bytes(plistlib.dumps(info))

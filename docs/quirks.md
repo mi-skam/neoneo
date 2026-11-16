@@ -13,8 +13,11 @@ results are recorded here, separate from the automated tests.
   `xyz.miskam.keyboardlayout.neoneo.keylayout.neoneo`. KLInfo
   `TISInputSourceID` is ignored (the official Neo bundle shows the same).
 - **Template icon:** `TISIconIsTemplate` in KLInfo makes the "nn" icon follow
-  the menu bar colour. `TICapsLockLanguageSwitchCapable = false` keeps macOS
-  from ever using Caps Lock to switch to ABC.
+  the menu bar colour.
+- **Do not set `TICapsLockLanguageSwitchCapable = false`.** With it, Caps Lock
+  stayed on after every Mod3 press: macOS dropped Karabiner's short Caps Lock
+  press on release, and one more tap was needed to clear it. Removing the key
+  fixed it (operator, 2026-11-16).
 - A standalone `.keylayout` loads too (id `org.unknown.keylayout.<name>`, no
   template icon); v0.1 used it until the bundle id was fixed.
 - Bundles are only picked up at login; `TISRegisterInputSource` registers a

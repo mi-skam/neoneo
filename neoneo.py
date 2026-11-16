@@ -210,7 +210,7 @@ def keylayout_xml(
 # (KLInfo TISInputSourceID is ignored).
 BUNDLE_ID = "xyz.miskam.keyboardlayout.neoneo"
 INPUT_SOURCE = BUNDLE_ID + ".keylayout.neoneo"
-VERSION = "0.1"
+VERSION = "0.1.1"
 
 
 def write_bundle(out: Path, xml: str, icns: Path) -> Path:

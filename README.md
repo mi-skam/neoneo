@@ -5,7 +5,7 @@ Option, Command and Control behave as on every other macOS layout. It is a
 generated keylayout plus a small set of Karabiner-Elements rules; Mod3 and Mod4
 reach the keylayout through the Caps Lock state.
 
-**Version 0.1.** Layers 1–6 on ISO keyboards. Not yet: dead keys (typed as plain
+**Version 0.1.1.** Layers 1–6 on ISO keyboards. Not yet: dead keys (typed as plain
 characters), Shift lock, Mod4 lock.
 
 ## Install
@@ -16,7 +16,7 @@ least once.
 1. Download `neoneo-<version>.zip` from the
    [releases](../../releases), unpack it, and in Terminal run:
    ```sh
-   sh ~/Downloads/neoneo-0.1/install.sh
+   sh ~/Downloads/neoneo-0.1.1/install.sh
    ```
 2. Log out and in, or restart. **neoneo** appears in the input menu with an
    "nn" icon (System Settings > Keyboard > Input Sources lists it under German).

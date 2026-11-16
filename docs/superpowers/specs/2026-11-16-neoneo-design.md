@@ -4,7 +4,7 @@ Date: 2026-11-16. Status: draft for approval.
 
 ## Intent
 
-neoneo is the Neo2 layout (https://www.neo-layout.org/) for macOS, rebuilt so it
+neoneo is the Neo2 layout for macOS, rebuilt so it
 behaves like any other macOS keyboard layout. Today's setup (the official
 `Deutsch (Neo 2).keylayout` plus 72 hand-written Karabiner rules in
 `~/.config/home-manager/macos/karabiner.json`) has these quirks:
@@ -16,7 +16,7 @@ behaves like any other macOS keyboard layout. Today's setup (the official
 - macOS layouts know only Shift, Option, Caps Lock, Command, Control; Neo needs
   two more modifiers (Mod3, Mod4).
 
-The task now is a **starting project** in `~/Work/neoneo`: the mechanism
+The task now is in `~/Work/neoneo`: the mechanism
 proven, the source of truth and generator in place, tests, docs. Not a
 finished, polished layout.
 
@@ -34,10 +34,10 @@ finished, polished layout.
   the keylayout and the Karabiner rules; as few Karabiner manipulators as
   possible on the typing path.
 
-## Non-goals (for the starting project)
+## Non-goals (for v0.1)
 
-- Dead keys (Neo's `^ ` ´` keys and their layers): next step after the
-  starting project. They are emitted as plain characters until then. (My call.)
+- Dead keys (Neo's `^ ` ´` keys and their layers): next step after v0.1
+- They are emitted as plain characters until then. (My call.)
 - Shift lock (both Shifts) and Mod4 lock. (My call, next step.)
 - home-manager/Nix integration, a flake, other layouts (3l, Bone, …).
 - ANSI keyboards (no `<` key); ISO only.
@@ -62,19 +62,13 @@ finished, polished layout.
   (10/50) relative to other ISO keyboards; the existing config swaps them in
   Karabiner.
 
-## Approaches
+## Approach
 
-1. **One data file + generator** (chosen). A table lists each physical key with
-   its six Neo layers; a Python script generates the `.keylayout` bundle and
-   the Karabiner rules; tests check the invariants. Changing a character is a
-   one-line edit and both outputs follow.
-2. Hand-edit both files (Ukelele + hand-written Karabiner JSON). Fastest to
-   start; it is how today's setup drifted. Rejected.
-3. Fork the official Neo macOS files. Inherits Option-as-Mod3 and QWERTZ
-   Ctrl, which neoneo rejects. Rejected.
+**One data file + generator** (chosen). A table lists each physical key with
+its six Neo layers; a Python script generates the `.keylayout` bundle and
+the Karabiner rules; tests check the invariants. Changing a character is a
+one-line edit and both outputs follow.
 
-Chosen with the operator: approach 1, Option stays Option (Mod3/Mod4 through
-Karabiner), shortcuts follow Neo letters, "leanest and best performing".
 
 ## Mechanism: the hidden switch
 
@@ -82,16 +76,16 @@ Karabiner signals Mod3/Mod4 to the keylayout through modifier states nobody
 types by hand. The physical Caps Lock key is Mod3, so the Caps Lock *state* is
 free to serve as the switch:
 
-| Held (physical)     | Karabiner sets               | Keylayout map selected        | Layer |
-|---------------------|------------------------------|-------------------------------|-------|
-| —                   | —                            | none                          | 1     |
-| Shift               | —                            | anyShift                      | 2     |
-| Mod3                | caps on                      | caps                          | 3     |
-| Mod4                | caps on; per-key rules       | nav: key codes; chars: caps+anyShift+anyOption | 4 |
-| Shift+Mod3          | caps on                      | caps+anyShift                 | 5     |
-| Mod3+Mod4           | caps on + Option held        | caps+anyOption                | 6     |
-| Option (±Shift)     | —                            | anyOption (Apple German)      | —     |
-| ⌘ / Ctrl (any)      | —                            | command / control: Neo letters| —     |
+| Held (physical) | Karabiner sets         | Keylayout map selected                         | Layer |
+| --------------- | ---------------------- | ---------------------------------------------- | ----- |
+| —               | —                      | none                                           | 1     |
+| Shift           | —                      | anyShift                                       | 2     |
+| Mod3            | caps on                | caps                                           | 3     |
+| Mod4            | caps on; per-key rules | nav: key codes; chars: caps+anyShift+anyOption | 4     |
+| Shift+Mod3      | caps on                | caps+anyShift                                  | 5     |
+| Mod3+Mod4       | caps on + Option held  | caps+anyOption                                 | 6     |
+| Option (±Shift) | —                      | anyOption (Apple German)                       | —     |
+| ⌘ / Ctrl (any)  | —                      | command / control: Neo letters                 | —     |
 
 Consequences:
 
@@ -118,7 +112,7 @@ state does not work: map Mod3 to a held Option+Control pair in the keylayout
 ```
 ~/Work/neoneo/
   README.md            what it is, install, the hidden switch in five lines
-  justfile             build, test, install, uninstall, spike-install
+  makefile            build, test, install, uninstall, spike-install
   layout/neoneo.tsv    source of truth (below)
   neoneo.py            generator, Python 3 stdlib only, one file
   tests/test_neoneo.py unittest
@@ -141,11 +135,11 @@ state does not work: map Mod3 to a held Option+Control pair in the keylayout
   The Option map is copied from Apple's German layout mapping, kept as a
   second table `layout/option-de.tsv`. Fails hard on unknown names, missing
   layers or duplicate key codes.
-- `just install` copies the bundle to `~/Library/Keyboard Layouts/` and the
+- `make install` copies the bundle to `~/Library/Keyboard Layouts/` and the
   JSON to `~/.config/karabiner/assets/complex_modifications/`, then says to
-  log out/in and enable the rule in Karabiner. `just uninstall` reverses it.
+  log out/in and enable the rule in Karabiner. `make uninstall` reverses it.
 
-## Tests (stdlib unittest, run by `just test`)
+## Tests (stdlib unittest, run by `make test`)
 
 - TSV: every row has six layers, unique key codes, every `@name` known.
 - Generated keylayout parses as XML and has the maps in the table above.

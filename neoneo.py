@@ -33,7 +33,6 @@ NAV: Dict[str, str] = {
     "@undo": "undo",
     **{f"@kp{d}": f"keypad_{d}" for d in range(10)},
     "@kpdot": "keypad_period",
-    "@kpcomma": "keypad_comma",
     "@kpplus": "keypad_plus",
     "@kpminus": "keypad_hyphen",
     "@kpmul": "keypad_asterisk",
@@ -364,6 +363,23 @@ def build(out: Path) -> None:
         json.dumps(karabiner_rules(keys), indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
 
+def dist(out: Path) -> Path:
+    """Assemble the release folder out/neoneo-<VERSION> from scratch."""
+    import shutil
+
+    folder = out / f"neoneo-{VERSION}"
+    if folder.exists():
+        shutil.rmtree(folder)
+    folder.mkdir(parents=True)
+    build(folder)
+    shutil.copyfile(ROOT / "tools" / "neoneo.capslockdelay.plist", folder / "neoneo.capslockdelay.plist")
+    shutil.copyfile(ROOT / "README.md", folder / "README.md")
+    for script in ("install.sh", "uninstall.sh"):
+        shutil.copyfile(ROOT / "tools" / script, folder / script)
+        (folder / script).chmod(0o755)
+    return folder
+
+
 ROOT = Path(__file__).resolve().parent
 
 
@@ -374,11 +390,20 @@ def main(argv: List[str]) -> int:
     sub = parser.add_subparsers(dest="command", required=True)
     b = sub.add_parser("build", help="write neoneo.bundle and karabiner-neoneo.json")
     b.add_argument("--out", type=Path, required=True)
+    d = sub.add_parser("dist", help="assemble the release folder neoneo-<version>")
+    d.add_argument("--out", type=Path, required=True)
     v = sub.add_parser("verify", help="compare a dump-layout.swift dump with the TSV")
     v.add_argument("dump", type=Path)
+    sub.add_parser("version", help="print the version")
     args = parser.parse_args(argv)
     if args.command == "build":
         build(args.out)
+        return 0
+    if args.command == "dist":
+        print(dist(args.out))
+        return 0
+    if args.command == "version":
+        print(VERSION)
         return 0
     problems = verify(args.dump, expected_rows(*_sources()))
     for p in problems:

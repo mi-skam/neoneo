@@ -39,7 +39,7 @@ NAV_KEYSYMS: Dict[str, str] = {
     "BackSpace": "@bksp", "Delete": "@del", "Insert": "@ins",
     "Escape": "@esc", "Tab": "@tab", "Return": "@ret", "Undo": "@undo",
     **{f"KP_{d}": f"@kp{d}" for d in range(10)},
-    "KP_Decimal": "@kpdot", "KP_Separator": "@kpcomma", "KP_Add": "@kpplus",
+    "KP_Decimal": "@kpdot", "KP_Separator": ",", "KP_Add": "@kpplus",
     "KP_Subtract": "@kpminus", "KP_Multiply": "@kpmul", "KP_Divide": "@kpdiv",
 }
 

@@ -10,26 +10,46 @@ characters), Shift lock, Mod4 lock.
 
 ## Install
 
-Needs Python 3.9+, the Xcode command line tools (for `swift`) and
-[Karabiner-Elements](https://karabiner-elements.pqrs.org/).
+Needs [Karabiner-Elements](https://karabiner-elements.pqrs.org/).
+
+1. Download `neoneo-<version>.zip` from the
+   [releases](../../releases), unpack it, and in Terminal run:
+   ```sh
+   sh ~/Downloads/neoneo-0.1/install.sh
+   ```
+2. Log out and in, or restart. **neoneo** appears in the input menu with an
+   "nn" icon (System Settings > Keyboard > Input Sources lists it under German).
+3. Karabiner-Elements > Settings > Complex Modifications > Add predefined rule >
+   **neoneo**: enable both rules (Default profile).
+4. Select neoneo. Check: Caps Lock + the key printed `A` types `\`, and Caps Lock
+   is off again after you let go.
+
+Installs for the current user only: the layout in `~/Library/Keyboard Layouts`,
+the rules in Karabiner's assets, and a login agent (see below).
+
+**Updating:** run the new version's `install.sh`, log out and in, then in
+Karabiner remove both neoneo rules and add them again. Karabiner keeps its own
+copy of enabled rules, so an update does not reach them otherwise.
+
+**Removing:** switch to another layout in the input menu, then run
+`sh uninstall.sh` from the release folder. It refuses while neoneo is
+selected, because removing the selected layout crashes apps. Remove the two
+rules in Karabiner afterwards.
+
+### From source
+
+Needs Python 3.9+ and the Xcode command line tools (for `swift`).
 
 ```sh
 make test       # run the tests
-make install    # build and install the layout, the Karabiner rules and a login agent
+make install    # build the release folder and run its install.sh
+make verify     # compare the installed layout with the source table
+make uninstall  # run uninstall.sh
+make dist       # build/neoneo-<version>.zip, as published by CI
 ```
 
-Then:
-
-1. Log out and in. **neoneo** appears in the input menu with an "nn" icon
-   (System Settings > Keyboard > Input Sources lists it under German).
-2. Karabiner-Elements > Settings > Complex Modifications > Add predefined rule >
-   **neoneo**: enable both rules (Default profile).
-3. Select neoneo. Check: Caps Lock + the key printed `A` types `\`, and Caps Lock
-   is off again after you let go.
-
-`make verify` compares the installed layout with the source table.
-`make uninstall` switches to Apple's German layout, then removes everything
-`make install` added; remove the Karabiner rules in Karabiner afterwards.
+Releases: set `VERSION` in `neoneo.py`, commit, tag `v<VERSION>` and push the
+tag. GitHub Actions runs the tests and publishes the zip.
 
 ### Recommended settings
 
@@ -68,6 +88,8 @@ Then:
 - Measured keyboards: Apple internal and Magic Keyboard (both swap the `^` and
   `<` key codes; handled). Other ISO keyboards are expected to work but are not
   measured yet.
+- Releasing Mod3 and Mod4 in a rolling order (the first-pressed one first)
+  can give one wrong character until the other key is released.
 - The input source id is `xyz.miskam.keyboardlayout.neoneo.keylayout.neoneo`:
   macOS derives it from the bundle id and ignores a custom one.
 
@@ -78,5 +100,7 @@ Then:
 - `layout/apple-german.tsv`, `layout/option-de.tsv`: Apple German, for Option
   and for keys outside the Neo table.
 - `layout/neoneo.icns`: the menu bar icon (`make icon` redraws it).
+- `tools/install.sh`, `tools/uninstall.sh`: the scripts shipped in the release.
+- `.github/workflows/release.yml`: tests on every push; the release on a tag.
 - [Design](docs/superpowers/specs/2026-11-16-neoneo-design.md),
   [macOS quirks and hand-checked results](docs/quirks.md).

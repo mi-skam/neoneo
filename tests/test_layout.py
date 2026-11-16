@@ -30,6 +30,13 @@ class LayoutTest(unittest.TestCase):
         self.assertEqual(keys[49].layers[0], " ")
         self.assertEqual(len(keys), 47)
 
+    def test_keypad_comma_is_a_character(self):
+        # HID keypad_comma becomes the JIS keypad key (code 95), which types
+        # nothing on a German setup; layer 4 sends "," through map 7 instead.
+        keys = {k.code: k for k in load_layout(TSV)}
+        self.assertEqual(keys[41].layers[3], ",")
+        self.assertNotIn("@kpcomma", NAV)
+
     def test_unique_codes_and_names(self):
         keys = load_layout(TSV)
         self.assertEqual(len({k.code for k in keys}), len(keys))

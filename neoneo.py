@@ -213,7 +213,7 @@ def write_keylayout(out: Path, xml: str) -> Path:
     return path
 
 
-# Values from docs/quirks.md (spike, 2026-11-16).
+# Values from docs/quirks.md (mechanism checks, 2026-11-16).
 MOD3_KEYS: List[str] = ["caps_lock", "backslash", "non_us_pound"]
 MOD4_KEYS: List[str] = ["non_us_backslash", "grave_accent_and_tilde", "right_command"]
 # Apple ISO keyboards report the ^ key as non_us_backslash and the < key as

@@ -3,32 +3,30 @@
 How neoneo meets each macOS quirk, and what was observed by hand. Hand-checked
 results are recorded here, separate from the automated tests.
 
-## Spike (2026-11-16)
+## Install format
 
-Install format: a `.bundle` in `~/Library/Keyboard Layouts` was not loaded after
-logout (absent from `TISCreateInputSourceList`), while the identical
-`.keylayout` as a standalone file loads at once via `TISRegisterInputSource`.
-The spike therefore installs the standalone file (ID
-`org.unknown.keylayout.neoneo-spike`, listed under Others). Why the bundle
-failed is open; it matters for step 4 only if language grouping is wanted.
-After install, the layout only appeared in Settings after it was added to
-`com.apple.HIToolbox AppleEnabledInputSources` (id `-24602`, name
-`neoneo-spike`) and the user logged out and in.
+A `.bundle` in `~/Library/Keyboard Layouts` was not loaded after logout
+(absent from `TISCreateInputSourceList`), while the identical `.keylayout` as a
+standalone file loads at once via `TISRegisterInputSource`. neoneo therefore
+installs the standalone file (ID `org.unknown.keylayout.neoneo`, listed under
+Others). Why the bundle failed is open. The layout only appears in Settings
+after it is added to `com.apple.HIToolbox AppleEnabledInputSources` and the
+user logs out and in; `make install` does the first part.
+
+The Karabiner rules match the input source ID exactly. With a wrong ID they
+silently do nothing, while plain Caps Lock still gives layer 3 from the layout
+alone, so a quick Caps test can pass for the wrong reason.
 
 "Use Caps Lock to switch to and from ABC" is only offered when a non-Latin
 input method is enabled. With only Latin layouts it does not appear and is
 inactive. Adding such a method later may turn it on and break Mod3.
 
-Setup: `make spike-install`, enable the layout (see above), log out and in,
-enable both "neoneo spike" rules in Karabiner (Default profile), select
-`neoneo-spike`. The Karabiner rules match the input source ID
-`org.unknown.keylayout.neoneo-spike`; with a wrong ID they silently do nothing
-while plain Caps Lock still gives layer 3 from the layout alone. Only the keys `u i a 1` (QWERTZ `a s d 1`) type
-characters; Return, Tab, Delete, Escape, arrows, keypad and Space work as usual.
+## Mechanism checks (2026-11-16)
 
-Candidate modifier keys in the spike: Mod3 = `caps_lock`, `non_us_pound`,
-`backslash`; Mod4 = `non_us_backslash`, `grave_accent_and_tilde`,
-`right_command`.
+Checked with a four-key test layout (Neo `u i a 1` on QWERTZ `a s d 1`) before
+the generator was written. Candidate modifier keys: Mod3 = `caps_lock`,
+`non_us_pound`, `backslash`; Mod4 = `non_us_backslash`,
+`grave_accent_and_tilde`, `right_command`.
 
 | # | Check | Expected | Result |
 |---|-------|----------|--------|
@@ -46,7 +44,7 @@ Candidate modifier keys in the spike: Mod3 = `caps_lock`, `non_us_pound`,
 | 12 | Both Mod3 keys held, release in either order | no Caps Lock left on | ok |
 
 Keyboards (Karabiner-EventViewer, `key_code` names; read with plain Deutsch
-selected, because with neoneo-spike active EventViewer shows the rules' output,
+selected, because with the test layout active EventViewer shows the rules' output,
 so all three keys appear as `caps_lock`):
 
 | Keyboard | key left of 1 | key left of Y | key right of Ä |
@@ -83,5 +81,5 @@ out and in and enable both "neoneo" rules in Karabiner.
 `make verify` (automated, 2026-11-16): ok, all 128 key codes × 10 states match
 the TSV.
 
-Hand checks on the full layout (repeat the spike checks with the real keys):
+Hand checks on the full layout (repeat the mechanism checks with the real keys):
 _pending_.

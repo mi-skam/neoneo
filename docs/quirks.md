@@ -94,6 +94,10 @@ lost on reboot and Karabiner restart, so `make install` adds the login agent
 characters (operator). After a Karabiner restart without logout, rerun it with
 `launchctl kickstart -k gui/$(id -u)/neoneo.capslockdelay`.
 
+Caps Lock LED: off while Mod3 is held after turning off "Manipulate caps lock
+LED" per keyboard in Karabiner > Settings > Devices (operator, 2026-11-16).
+The on-screen Caps Lock symbol still appears with the internal keyboard.
+
 Apps that read key codes instead of the layout for shortcuts (no per-app
 remaps in v0.1; listed here per the spec):
 

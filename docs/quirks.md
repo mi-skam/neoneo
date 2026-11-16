@@ -1,0 +1,75 @@
+# macOS quirks
+
+How neoneo meets each macOS quirk, and what was observed by hand. Hand-checked
+results are recorded here, separate from the automated tests.
+
+## Spike (2026-11-16)
+
+Install format: a `.bundle` in `~/Library/Keyboard Layouts` was not loaded after
+logout (absent from `TISCreateInputSourceList`), while the identical
+`.keylayout` as a standalone file loads at once via `TISRegisterInputSource`.
+The spike therefore installs the standalone file (ID
+`org.unknown.keylayout.neoneo-spike`, listed under Others). Why the bundle
+failed is open; it matters for step 4 only if language grouping is wanted.
+After install, the layout only appeared in Settings after it was added to
+`com.apple.HIToolbox AppleEnabledInputSources` (id `-24602`, name
+`neoneo-spike`) and the user logged out and in.
+
+"Use Caps Lock to switch to and from ABC" is only offered when a non-Latin
+input method is enabled. With only Latin layouts it does not appear and is
+inactive. Adding such a method later may turn it on and break Mod3.
+
+Setup: `make spike-install`, enable the layout (see above), log out and in,
+enable both "neoneo spike" rules in Karabiner (Default profile), select
+`neoneo-spike`. The Karabiner rules match the input source ID
+`org.unknown.keylayout.neoneo-spike`; with a wrong ID they silently do nothing
+while plain Caps Lock still gives layer 3 from the layout alone. Only the keys `u i a 1` (QWERTZ `a s d 1`) type
+characters; Return, Tab, Delete, Escape, arrows, keypad and Space work as usual.
+
+Candidate modifier keys in the spike: Mod3 = `caps_lock`, `non_us_pound`,
+`backslash`; Mod4 = `non_us_backslash`, `grave_accent_and_tilde`,
+`right_command`.
+
+| # | Check | Expected | Result |
+|---|-------|----------|--------|
+| 1 | Fast typing Mod3+u, Mod3+i, Mod3+a | `\ / {` every time, no uppercase, no delay | ok |
+| 2 | Hold Mod3+i | `/` repeats | ok |
+| 3 | Shift+Mod3+i | `ι` | ok |
+| 4 | Mod3+Mod4+i, press both orders, release both orders | `∫`; Caps Lock off afterwards | ok in all four orders. With i held through the release: Mod4 released first gives `/` (layer 3), Mod3 released first gives `⁄` (Option-only map, not layer 4) |
+| 5 | Hold Mod3+Mod4, release Mod3 first, type i, then Mod4+i again | note what appears | i tapped after releasing Mod3 moves the cursor one character left (plain layer 4, no extra Option) |
+| 6 | Mod4+i / Shift+Mod4+i / Mod4+1 | cursor left / selects left / `ª` | ok |
+| 7 | Tap Caps Lock | Escape; Caps state off afterwards | ok |
+| 8 | Caps Lock LED and on-screen Caps indicator on Mod3 | seen or not | seen: the LED and the on-screen Caps indicator light up while Mod3 is held |
+| 9 | ⌘ + the `a` key (QWERTZ `d`) in TextEdit, also with Mod3 held | select all | ok, also with Mod3 held |
+| 10 | Ctrl + the `a` key in Terminal | cursor to line start | ok |
+| 11 | Option + the `u` key | German Option+U (umlaut dead key: nothing) | ok (nothing appears) |
+| 12 | Both Mod3 keys held, release in either order | no Caps Lock left on | ok |
+
+Keyboards (Karabiner-EventViewer, `key_code` names; read with plain Deutsch
+selected, because with neoneo-spike active EventViewer shows the rules' output,
+so all three keys appear as `caps_lock`):
+
+| Keyboard | key left of 1 | key left of Y | key right of Ä |
+|----------|---------------|---------------|----------------|
+| Apple internal (1452/835) | `non_us_backslash` (swapped) | `grave_accent_and_tilde` (swapped) | `backslash` |
+| Apple Magic Keyboard, Bluetooth (76/615) | `non_us_backslash` (swapped) | `grave_accent_and_tilde` (swapped) | `backslash` |
+| Logitech (1133/50475) | | | |
+| PC (1130/49304) | | | |
+
+Outcome: all 12 checks pass, so the Caps Lock state approach stays (no
+Option+Control fallback).
+
+- Mod3 = `caps_lock` and the key right of Ä, which both Apple keyboards report
+  as `backslash`.
+- Mod4 = the key left of Y and `right_command`. Apple keyboards report the key
+  left of Y as `grave_accent_and_tilde`, standard ISO as `non_us_backslash`.
+- 10/50 swap devices: 1452/835 (Apple internal), 76/615 (Magic Keyboard).
+  Apply the swap as a per-device simple modification: complex manipulators do
+  not feed into each other, so a swap written as a complex rule would never
+  reach the Mod4 rule.
+- Logitech (1133/50475) and PC (1130/49304): not measured, not connected on
+  2026-11-16. Measure before relying on them.
+
+Trap: System Settings > Keyboard > Modifier Keys sets Caps Lock to "No Action"
+on the internal keyboard (1452/835). Karabiner bypasses this while running;
+without Karabiner, Caps Lock does nothing on that keyboard.

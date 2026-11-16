@@ -83,3 +83,10 @@ the TSV.
 
 Hand checks on the full layout (repeat the mechanism checks with the real keys):
 _pending_.
+
+Apps that read key codes instead of the layout for shortcuts (no per-app
+remaps in v0.1; listed here per the spec):
+
+| App | Observed | Cause |
+|-----|----------|-------|
+| hrdx | Ctrl+B fires on the key printed `b` (Neo `z`), not on the Neo `b` key | Ctrl shortcuts matched by physical key position (key code 11), as with the old Neo2 setup |

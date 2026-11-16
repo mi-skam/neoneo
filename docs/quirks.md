@@ -98,7 +98,7 @@ rules in Karabiner.
 10 states match the TSV. Menu bar shows the "nn" template icon (operator).
 
 Hand checks on the full layout (repeat the mechanism checks with the real keys):
-_pending_.
+done, pass (operator, 2026-11-16), after the fixes below.
 
 Caps Lock delay (found 2026-11-16 on the full layout): a fast Mod3+key
 sometimes typed the layer-1 character. Cause: macOS delays Caps Lock on
@@ -112,7 +112,10 @@ characters (operator). After a Karabiner restart without logout, rerun it with
 
 Caps Lock LED: off while Mod3 is held after turning off "Manipulate caps lock
 LED" per keyboard in Karabiner > Settings > Devices (operator, 2026-11-16).
-The on-screen Caps Lock symbol still appears with the internal keyboard.
+The on-screen Caps Lock symbol (shown with the internal keyboard) is hidden by
+`defaults write kCFPreferencesAnyApplication TSMLanguageIndicatorEnabled 0`
+(operator, 2026-11-16). System-wide: it also hides the input-source popup.
+Undo: `defaults delete kCFPreferencesAnyApplication TSMLanguageIndicatorEnabled`.
 
 Apps that read key codes instead of the layout for shortcuts (no per-app
 remaps in v0.1; listed here per the spec):

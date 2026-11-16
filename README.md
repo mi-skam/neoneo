@@ -35,6 +35,9 @@ Then:
 
 - **Caps Lock LED:** Karabiner-Elements > Settings > Devices > each keyboard >
   turn off "Manipulate caps lock LED", or the LED lights up while Mod3 is held.
+- **Caps Lock symbol:** macOS shows a ⇪ symbol near the cursor while Mod3 is
+  held. `defaults write kCFPreferencesAnyApplication TSMLanguageIndicatorEnabled 0`
+  hides it (system-wide; it also hides the input-source popup).
 - **Caps Lock delay:** handled by the login agent `neoneo.capslockdelay` that
   `make install` adds. After a Karabiner restart without logging out, run
   `launchctl kickstart -k gui/$(id -u)/neoneo.capslockdelay`.

@@ -26,7 +26,7 @@ class DistTest(unittest.TestCase):
     def test_contents(self):
         names = sorted(p.name for p in self.folder.iterdir())
         self.assertEqual(names, [
-            "README.md", "install.sh", "karabiner-neoneo.json",
+            "README.md", "install.sh", "karabiner-config.js", "karabiner-neoneo.json",
             "neoneo.bundle", "neoneo.capslockdelay.plist", "uninstall.sh",
         ])
         info = plistlib.loads((self.folder / "neoneo.bundle" / "Contents" / "Info.plist").read_bytes())
@@ -45,9 +45,17 @@ class DistTest(unittest.TestCase):
         self.assertIn("AppleEnabledInputSources", text)
         self.assertIn("launchctl bootstrap", text)
 
+    def test_install_writes_karabiner_config(self):
+        text = (self.folder / "install.sh").read_text()
+        self.assertIn('karabiner-config.js" install', text)
+
     def test_uninstall_refuses_while_neoneo_selected(self):
         text = (self.folder / "uninstall.sh").read_text()
         self.assertIn("AppleSelectedInputSources", text)
+
+    def test_uninstall_removes_karabiner_rules(self):
+        text = (self.folder / "uninstall.sh").read_text()
+        self.assertIn('karabiner-config.js" uninstall', text)
 
 
 class VersionTest(unittest.TestCase):

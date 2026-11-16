@@ -374,6 +374,7 @@ def dist(out: Path) -> Path:
     build(folder)
     shutil.copyfile(ROOT / "tools" / "neoneo.capslockdelay.plist", folder / "neoneo.capslockdelay.plist")
     shutil.copyfile(ROOT / "README.md", folder / "README.md")
+    shutil.copyfile(ROOT / "tools" / "karabiner-config.js", folder / "karabiner-config.js")
     for script in ("install.sh", "uninstall.sh"):
         shutil.copyfile(ROOT / "tools" / script, folder / script)
         (folder / script).chmod(0o755)

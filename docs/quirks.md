@@ -106,9 +106,19 @@ Apple-vendor keyboards, and Karabiner's virtual keyboard reports Apple's vendor
 id (0x5ac/0x250), so the Caps state came on after the next key. Fix:
 `CapsLockDelayOverride = 0` on the virtual keyboard via `hidutil`; the value is
 lost on reboot and Karabiner restart, so `make install` adds the login agent
-`neoneo.capslockdelay`, which sets it at login. After the fix: no more literal
-characters (operator). After a Karabiner restart without logout, rerun it with
-`launchctl kickstart -k gui/$(id -u)/neoneo.capslockdelay`.
+`neoneo.capslockdelay`, which sets it at login and every 30 seconds. After the
+fix: no more literal characters (operator).
+
+Why a timer, not a device trigger (2026-11-17): a launchd `LaunchEvents`
+IOKit-matching job on the virtual keyboard (vendor 1452, product 592) was
+relaunched every 10 seconds, because a plain shell job cannot consume the XPC
+event. Doing it properly needs a compiled helper; a 30-second `StartInterval`
+running one idempotent `hidutil --set` is simpler.
+
+Karabiner config at install (2026-11-17): `install.sh` writes the neoneo rules
+into the selected profile of `karabiner.json` (JavaScript for Automation, so no
+extra tools are needed); Karabiner reloads the file by itself. A live install
+changed only the neoneo rules and added the Magic Keyboard's LED setting.
 
 Caps Lock LED: off while Mod3 is held after turning off "Manipulate caps lock
 LED" per keyboard in Karabiner > Settings > Devices (operator, 2026-11-16).

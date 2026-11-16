@@ -2,8 +2,10 @@
 # Remove what install.sh installed. Safe to run again after a partial run.
 set -eu
 
+here=$(cd "$(dirname "$0")" && pwd)
 layouts="$HOME/Library/Keyboard Layouts"
-karabiner="$HOME/.config/karabiner/assets/complex_modifications"
+karabiner_dir="$HOME/.config/karabiner"
+karabiner_conf="$karabiner_dir/karabiner.json"
 agent="$HOME/Library/LaunchAgents/neoneo.capslockdelay.plist"
 
 # Removing the selected layout makes every app crash when activated.
@@ -16,7 +18,14 @@ fi
 
 launchctl bootout "gui/$(id -u)" "$agent" 2>/dev/null || true
 rm -f "$agent"
-rm -f "$karabiner/neoneo.json"
+
+# Karabiner: remove the rules from every profile (device settings stay).
+if [ -f "$karabiner_conf" ]; then
+    cp "$karabiner_conf" "$karabiner_conf.before-neoneo-uninstall"
+    osascript -l JavaScript "$here/karabiner-config.js" uninstall "$karabiner_conf"
+fi
+rm -f "$karabiner_dir/assets/complex_modifications/neoneo.json"
+
 rm -rf "$layouts/neoneo.bundle"
 
 # Drop neoneo from the enabled input sources and the history.
@@ -36,7 +45,4 @@ done
 defaults import com.apple.HIToolbox "$prefs"
 rm -f "$prefs"
 
-cat <<'EOF'
-neoneo removed. Remove the two neoneo rules in Karabiner-Elements >
-Settings > Complex Modifications, then log out and in.
-EOF
+echo "neoneo removed. Log out and in."

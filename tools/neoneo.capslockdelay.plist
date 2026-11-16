@@ -1,23 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <!--
-  Sets the Caps Lock delay of Karabiner's virtual keyboard to 0 at login.
+  Sets the Caps Lock delay of Karabiner's virtual keyboard to 0.
   macOS delays Caps Lock on Apple-vendor keyboards; the virtual keyboard
   reports Apple's vendor id, so without this a fast Mod3+key types the
-  layer-1 character. The setting is lost on reboot and on Karabiner restart.
-  Retries for a minute because the virtual keyboard may appear after login.
+  layer-1 character. The setting is lost when Karabiner restarts, so the
+  agent sets it at login and again every 30 seconds (idempotent, one
+  hidutil call).
 -->
 <plist version="1.0">
 <dict>
 	<key>Label</key>
 	<string>neoneo.capslockdelay</string>
-	<key>RunAtLoad</key>
-	<true/>
 	<key>ProgramArguments</key>
 	<array>
-		<string>/bin/sh</string>
-		<string>-c</string>
-		<string>for i in $(seq 30); do /usr/bin/hidutil property --matching '{"ProductID":0x250,"VendorID":0x5ac}' --set '{"CapsLockDelayOverride":0}' &gt;/dev/null; /usr/bin/hidutil property --matching '{"ProductID":0x250,"VendorID":0x5ac}' --get CapsLockDelayOverride | grep -qE '[[:space:]]0$' &amp;&amp; exit 0; sleep 2; done; exit 1</string>
+		<string>/usr/bin/hidutil</string>
+		<string>property</string>
+		<string>--matching</string>
+		<string>{"ProductID":0x250,"VendorID":0x5ac}</string>
+		<string>--set</string>
+		<string>{"CapsLockDelayOverride":0}</string>
 	</array>
+	<key>RunAtLoad</key>
+	<true/>
+	<key>StartInterval</key>
+	<integer>30</integer>
+	<key>StandardOutPath</key>
+	<string>/dev/null</string>
 </dict>
 </plist>

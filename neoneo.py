@@ -210,7 +210,7 @@ def keylayout_xml(
 # (KLInfo TISInputSourceID is ignored).
 BUNDLE_ID = "xyz.miskam.keyboardlayout.neoneo"
 INPUT_SOURCE = BUNDLE_ID + ".keylayout.neoneo"
-VERSION = "0.1.1"
+VERSION = "0.1.2"
 
 
 def write_bundle(out: Path, xml: str, icns: Path) -> Path:
@@ -219,6 +219,8 @@ def write_bundle(out: Path, xml: str, icns: Path) -> Path:
     import shutil
 
     bundle = out / "neoneo.bundle"
+    if bundle.exists():
+        shutil.rmtree(bundle)  # no stale files from older builds
     res = bundle / "Contents" / "Resources"
     (res / "de.lproj").mkdir(parents=True, exist_ok=True)
     (res / "neoneo.keylayout").write_text(xml, encoding="utf-8")
@@ -379,7 +381,7 @@ def dist(out: Path, helper: Path) -> Path:
     shutil.copyfile(ROOT / "tools" / "karabiner-config.js", folder / "karabiner-config.js")
     shutil.copyfile(helper, folder / "neoneo-capslockdelay")
     (folder / "neoneo-capslockdelay").chmod(0o755)
-    for script in ("install.sh", "uninstall.sh"):
+    for script in ("install.sh", "uninstall.sh", "remove-input-source.sh"):
         shutil.copyfile(ROOT / "tools" / script, folder / script)
         (folder / script).chmod(0o755)
     return folder

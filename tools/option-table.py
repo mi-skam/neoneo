@@ -1,7 +1,7 @@
 """Build layout/option-de.tsv from a dump of Apple's German layout.
 
-usage: swift tools/dump-layout.swift com.apple.keylayout.German > german.tsv
-       python3 tools/option-table.py german.tsv layout/option-de.tsv
+usage: swift tools/dump-layout.swift com.apple.keylayout.German > layout/apple-german.tsv
+       python3 tools/option-table.py layout/apple-german.tsv layout/option-de.tsv
 
 Rows are keyed by the German layer-1 character: char, Option, Shift+Option.
 Keys whose layer-1 output is not a printable character are skipped; when two

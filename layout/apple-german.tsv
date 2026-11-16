@@ -1,0 +1,1280 @@
+0	none	U+0061
+0	shift	U+0041
+0	option	U+00E5
+0	shift+option	U+00C5
+0	caps	U+0041
+0	caps+shift	U+0041
+0	caps+option	U+00C5
+0	caps+shift+option	U+00C5
+0	command	U+0061
+0	control	U+0001
+1	none	U+0073
+1	shift	U+0053
+1	option	U+201A
+1	shift+option	U+00CD
+1	caps	U+0053
+1	caps+shift	U+0053
+1	caps+option	U+201A
+1	caps+shift+option	U+00CD
+1	command	U+0073
+1	control	U+0013
+2	none	U+0064
+2	shift	U+0044
+2	option	U+2202
+2	shift+option	U+2122
+2	caps	U+0044
+2	caps+shift	U+0044
+2	caps+option	U+2202
+2	caps+shift+option	U+2122
+2	command	U+0064
+2	control	U+0004
+3	none	U+0066
+3	shift	U+0046
+3	option	U+0192
+3	shift+option	U+00CF
+3	caps	U+0046
+3	caps+shift	U+0046
+3	caps+option	U+0192
+3	caps+shift+option	U+00CF
+3	command	U+0066
+3	control	U+0006
+4	none	U+0068
+4	shift	U+0048
+4	option	U+00AA
+4	shift+option	U+00D3
+4	caps	U+0048
+4	caps+shift	U+0048
+4	caps+option	U+00AA
+4	caps+shift+option	U+00D3
+4	command	U+0068
+4	control	U+0008
+5	none	U+0067
+5	shift	U+0047
+5	option	U+00A9
+5	shift+option	U+00CC
+5	caps	U+0047
+5	caps+shift	U+0047
+5	caps+option	U+00A9
+5	caps+shift+option	U+00CC
+5	command	U+0067
+5	control	U+0007
+6	none	U+0079
+6	shift	U+0059
+6	option	U+00A5
+6	shift+option	U+2021
+6	caps	U+0059
+6	caps+shift	U+0059
+6	caps+option	U+00A5
+6	caps+shift+option	U+2021
+6	command	U+0079
+6	control	U+0019
+7	none	U+0078
+7	shift	U+0058
+7	option	U+2248
+7	shift+option	U+00D9
+7	caps	U+0058
+7	caps+shift	U+0058
+7	caps+option	U+2248
+7	caps+shift+option	U+00D9
+7	command	U+0078
+7	control	U+0018
+8	none	U+0063
+8	shift	U+0043
+8	option	U+00E7
+8	shift+option	U+00C7
+8	caps	U+0043
+8	caps+shift	U+0043
+8	caps+option	U+00C7
+8	caps+shift+option	U+00C7
+8	command	U+0063
+8	control	U+0003
+9	none	U+0076
+9	shift	U+0056
+9	option	U+221A
+9	shift+option	U+25CA
+9	caps	U+0056
+9	caps+shift	U+0056
+9	caps+option	U+221A
+9	caps+shift+option	U+25CA
+9	command	U+0076
+9	control	U+0016
+10	none	
+10	shift	U+00B0
+10	option	U+201E
+10	shift+option	U+201C
+10	caps	
+10	caps+shift	U+00B0
+10	caps+option	U+201E
+10	caps+shift+option	U+201C
+10	command	U+005E
+10	control	U+001E
+11	none	U+0062
+11	shift	U+0042
+11	option	U+222B
+11	shift+option	U+2039
+11	caps	U+0042
+11	caps+shift	U+0042
+11	caps+option	U+222B
+11	caps+shift+option	U+2039
+11	command	U+0062
+11	control	U+0002
+12	none	U+0071
+12	shift	U+0051
+12	option	U+00AB
+12	shift+option	U+00BB
+12	caps	U+0051
+12	caps+shift	U+0051
+12	caps+option	U+00AB
+12	caps+shift+option	U+00BB
+12	command	U+0071
+12	control	U+0011
+13	none	U+0077
+13	shift	U+0057
+13	option	U+2211
+13	shift+option	U+201E
+13	caps	U+0057
+13	caps+shift	U+0057
+13	caps+option	U+2211
+13	caps+shift+option	U+201E
+13	command	U+0077
+13	control	U+0017
+14	none	U+0065
+14	shift	U+0045
+14	option	U+20AC
+14	shift+option	U+2030
+14	caps	U+0045
+14	caps+shift	U+0045
+14	caps+option	U+20AC
+14	caps+shift+option	U+2030
+14	command	U+0065
+14	control	U+0005
+15	none	U+0072
+15	shift	U+0052
+15	option	U+00AE
+15	shift+option	U+00B8
+15	caps	U+0052
+15	caps+shift	U+0052
+15	caps+option	U+00AE
+15	caps+shift+option	U+00B8
+15	command	U+0072
+15	control	U+0012
+16	none	U+007A
+16	shift	U+005A
+16	option	U+03A9
+16	shift+option	U+02C7
+16	caps	U+005A
+16	caps+shift	U+005A
+16	caps+option	U+03A9
+16	caps+shift+option	U+02C7
+16	command	U+007A
+16	control	U+001A
+17	none	U+0074
+17	shift	U+0054
+17	option	U+2020
+17	shift+option	U+02DD
+17	caps	U+0054
+17	caps+shift	U+0054
+17	caps+option	U+2020
+17	caps+shift+option	U+02DD
+17	command	U+0074
+17	control	U+0014
+18	none	U+0031
+18	shift	U+0021
+18	option	U+00A1
+18	shift+option	U+00AC
+18	caps	U+0031
+18	caps+shift	U+0021
+18	caps+option	U+00A1
+18	caps+shift+option	U+00AC
+18	command	U+0031
+18	control	U+0031
+19	none	U+0032
+19	shift	U+0022
+19	option	U+201C
+19	shift+option	U+201D
+19	caps	U+0032
+19	caps+shift	U+0022
+19	caps+option	U+201C
+19	caps+shift+option	U+201D
+19	command	U+0032
+19	control	U+0032
+20	none	U+0033
+20	shift	U+00A7
+20	option	U+00B6
+20	shift+option	U+0023
+20	caps	U+0033
+20	caps+shift	U+00A7
+20	caps+option	U+00B6
+20	caps+shift+option	U+0023
+20	command	U+0033
+20	control	U+0033
+21	none	U+0034
+21	shift	U+0024
+21	option	U+00A2
+21	shift+option	U+00A3
+21	caps	U+0034
+21	caps+shift	U+0024
+21	caps+option	U+00A2
+21	caps+shift+option	U+00A3
+21	command	U+0034
+21	control	U+0034
+22	none	U+0036
+22	shift	U+0026
+22	option	U+005D
+22	shift+option	
+22	caps	U+0036
+22	caps+shift	U+0026
+22	caps+option	U+005D
+22	caps+shift+option	
+22	command	U+0036
+22	control	U+0036
+23	none	U+0035
+23	shift	U+0025
+23	option	U+005B
+23	shift+option	U+FB01
+23	caps	U+0035
+23	caps+shift	U+0025
+23	caps+option	U+005B
+23	caps+shift+option	U+FB01
+23	command	U+0035
+23	control	U+0035
+24	none	
+24	shift	
+24	option	U+0027
+24	shift+option	U+02DA
+24	caps	
+24	caps+shift	
+24	caps+option	U+0027
+24	caps+shift+option	U+02DA
+24	command	U+00B4
+24	control	U+00B4
+25	none	U+0039
+25	shift	U+0029
+25	option	U+007D
+25	shift+option	U+00B7
+25	caps	U+0039
+25	caps+shift	U+0029
+25	caps+option	U+007D
+25	caps+shift+option	U+00B7
+25	command	U+0039
+25	control	U+0039
+26	none	U+0037
+26	shift	U+002F
+26	option	U+007C
+26	shift+option	U+005C
+26	caps	U+0037
+26	caps+shift	U+002F
+26	caps+option	U+007C
+26	caps+shift+option	U+005C
+26	command	U+0037
+26	control	U+0037
+27	none	U+00DF
+27	shift	U+003F
+27	option	U+00BF
+27	shift+option	U+02D9
+27	caps	U+00DF
+27	caps+shift	U+003F
+27	caps+option	U+00BF
+27	caps+shift+option	U+02D9
+27	command	U+00DF
+27	control	U+00DF
+28	none	U+0038
+28	shift	U+0028
+28	option	U+007B
+28	shift+option	U+02DC
+28	caps	U+0038
+28	caps+shift	U+0028
+28	caps+option	U+007B
+28	caps+shift+option	U+02DC
+28	command	U+0038
+28	control	U+0038
+29	none	U+0030
+29	shift	U+003D
+29	option	U+2260
+29	shift+option	U+00AF
+29	caps	U+0030
+29	caps+shift	U+003D
+29	caps+option	U+2260
+29	caps+shift+option	U+00AF
+29	command	U+0030
+29	control	U+0030
+30	none	U+002B
+30	shift	U+002A
+30	option	U+00B1
+30	shift+option	U+F8FF
+30	caps	U+002B
+30	caps+shift	U+002A
+30	caps+option	U+00B1
+30	caps+shift+option	U+F8FF
+30	command	U+002B
+30	control	U+002B
+31	none	U+006F
+31	shift	U+004F
+31	option	U+00F8
+31	shift+option	U+00D8
+31	caps	U+004F
+31	caps+shift	U+004F
+31	caps+option	U+00D8
+31	caps+shift+option	U+00D8
+31	command	U+006F
+31	control	U+000F
+32	none	U+0075
+32	shift	U+0055
+32	option	
+32	shift+option	U+00C1
+32	caps	U+0055
+32	caps+shift	U+0055
+32	caps+option	
+32	caps+shift+option	U+00C1
+32	command	U+0075
+32	control	U+0015
+33	none	U+00FC
+33	shift	U+00DC
+33	option	U+2022
+33	shift+option	U+00B0
+33	caps	U+00DC
+33	caps+shift	U+00DC
+33	caps+option	U+2022
+33	caps+shift+option	U+00B0
+33	command	U+00FC
+33	control	U+001D
+34	none	U+0069
+34	shift	U+0049
+34	option	U+2044
+34	shift+option	U+00DB
+34	caps	U+0049
+34	caps+shift	U+0049
+34	caps+option	U+2044
+34	caps+shift+option	U+00DB
+34	command	U+0069
+34	control	U+0009
+35	none	U+0070
+35	shift	U+0050
+35	option	U+03C0
+35	shift+option	U+220F
+35	caps	U+0050
+35	caps+shift	U+0050
+35	caps+option	U+220F
+35	caps+shift+option	U+220F
+35	command	U+0070
+35	control	U+0010
+36	none	U+000D
+36	shift	U+000D
+36	option	U+000D
+36	shift+option	U+000D
+36	caps	U+000D
+36	caps+shift	U+000D
+36	caps+option	U+000D
+36	caps+shift+option	U+000D
+36	command	U+000D
+36	control	U+000D
+37	none	U+006C
+37	shift	U+004C
+37	option	U+0040
+37	shift+option	U+FB02
+37	caps	U+004C
+37	caps+shift	U+004C
+37	caps+option	U+0040
+37	caps+shift+option	U+FB02
+37	command	U+006C
+37	control	U+000C
+38	none	U+006A
+38	shift	U+004A
+38	option	U+00BA
+38	shift+option	U+0131
+38	caps	U+004A
+38	caps+shift	U+004A
+38	caps+option	U+00BA
+38	caps+shift+option	U+0131
+38	command	U+006A
+38	control	U+000A
+39	none	U+00E4
+39	shift	U+00C4
+39	option	U+00E6
+39	shift+option	U+00C6
+39	caps	U+00C4
+39	caps+shift	U+00C4
+39	caps+option	U+00C6
+39	caps+shift+option	U+00C6
+39	command	U+00E4
+39	control	U+001B
+40	none	U+006B
+40	shift	U+004B
+40	option	U+2206
+40	shift+option	U+02C6
+40	caps	U+004B
+40	caps+shift	U+004B
+40	caps+option	U+2206
+40	caps+shift+option	U+02C6
+40	command	U+006B
+40	control	U+000B
+41	none	U+00F6
+41	shift	U+00D6
+41	option	U+0153
+41	shift+option	U+0152
+41	caps	U+00D6
+41	caps+shift	U+00D6
+41	caps+option	U+0152
+41	caps+shift+option	U+0152
+41	command	U+00F6
+41	control	U+001C
+42	none	U+0023
+42	shift	U+0027
+42	option	U+2018
+42	shift+option	U+2019
+42	caps	U+0023
+42	caps+shift	U+0027
+42	caps+option	U+2018
+42	caps+shift+option	U+2019
+42	command	U+0023
+42	control	U+0023
+43	none	U+002C
+43	shift	U+003B
+43	option	U+221E
+43	shift+option	U+02DB
+43	caps	U+002C
+43	caps+shift	U+003B
+43	caps+option	U+221E
+43	caps+shift+option	U+02DB
+43	command	U+002C
+43	control	U+002C
+44	none	U+002D
+44	shift	U+005F
+44	option	U+2013
+44	shift+option	U+2014
+44	caps	U+002D
+44	caps+shift	U+005F
+44	caps+option	U+2013
+44	caps+shift+option	U+2014
+44	command	U+002D
+44	control	U+002D
+45	none	U+006E
+45	shift	U+004E
+45	option	
+45	shift+option	U+203A
+45	caps	U+004E
+45	caps+shift	U+004E
+45	caps+option	
+45	caps+shift+option	U+203A
+45	command	U+006E
+45	control	U+000E
+46	none	U+006D
+46	shift	U+004D
+46	option	U+00B5
+46	shift+option	U+02D8
+46	caps	U+004D
+46	caps+shift	U+004D
+46	caps+option	U+00B5
+46	caps+shift+option	U+02D8
+46	command	U+006D
+46	control	U+000D
+47	none	U+002E
+47	shift	U+003A
+47	option	U+2026
+47	shift+option	U+00F7
+47	caps	U+002E
+47	caps+shift	U+003A
+47	caps+option	U+2026
+47	caps+shift+option	U+00F7
+47	command	U+002E
+47	control	U+002E
+48	none	U+0009
+48	shift	U+0009
+48	option	U+0009
+48	shift+option	U+0009
+48	caps	U+0009
+48	caps+shift	U+0009
+48	caps+option	U+0009
+48	caps+shift+option	U+0009
+48	command	U+0009
+48	control	U+0009
+49	none	U+0020
+49	shift	U+0020
+49	option	U+00A0
+49	shift+option	U+00A0
+49	caps	U+0020
+49	caps+shift	U+0020
+49	caps+option	U+00A0
+49	caps+shift+option	U+00A0
+49	command	U+0020
+49	control	U+0020
+50	none	U+003C
+50	shift	U+003E
+50	option	U+2264
+50	shift+option	U+2265
+50	caps	U+003C
+50	caps+shift	U+003E
+50	caps+option	U+2264
+50	caps+shift+option	U+2265
+50	command	U+003C
+50	control	U+003C
+51	none	U+0008
+51	shift	U+0008
+51	option	U+0008
+51	shift+option	U+0008
+51	caps	U+0008
+51	caps+shift	U+0008
+51	caps+option	U+0008
+51	caps+shift+option	U+0008
+51	command	U+0008
+51	control	U+0008
+52	none	U+0003
+52	shift	U+0003
+52	option	U+0003
+52	shift+option	U+0003
+52	caps	U+0003
+52	caps+shift	U+0003
+52	caps+option	U+0003
+52	caps+shift+option	U+0003
+52	command	U+0003
+52	control	U+0003
+53	none	U+001B
+53	shift	U+001B
+53	option	U+001B
+53	shift+option	U+001B
+53	caps	U+001B
+53	caps+shift	U+001B
+53	caps+option	U+001B
+53	caps+shift+option	U+001B
+53	command	U+001B
+53	control	U+001B
+54	none	
+54	shift	
+54	option	
+54	shift+option	
+54	caps	
+54	caps+shift	
+54	caps+option	
+54	caps+shift+option	
+54	command	
+54	control	
+55	none	
+55	shift	
+55	option	
+55	shift+option	
+55	caps	
+55	caps+shift	
+55	caps+option	
+55	caps+shift+option	
+55	command	
+55	control	
+56	none	
+56	shift	
+56	option	
+56	shift+option	
+56	caps	
+56	caps+shift	
+56	caps+option	
+56	caps+shift+option	
+56	command	
+56	control	
+57	none	
+57	shift	
+57	option	
+57	shift+option	
+57	caps	
+57	caps+shift	
+57	caps+option	
+57	caps+shift+option	
+57	command	
+57	control	
+58	none	
+58	shift	
+58	option	
+58	shift+option	
+58	caps	
+58	caps+shift	
+58	caps+option	
+58	caps+shift+option	
+58	command	
+58	control	
+59	none	
+59	shift	
+59	option	
+59	shift+option	
+59	caps	
+59	caps+shift	
+59	caps+option	
+59	caps+shift+option	
+59	command	
+59	control	
+60	none	
+60	shift	
+60	option	
+60	shift+option	
+60	caps	
+60	caps+shift	
+60	caps+option	
+60	caps+shift+option	
+60	command	
+60	control	
+61	none	
+61	shift	
+61	option	
+61	shift+option	
+61	caps	
+61	caps+shift	
+61	caps+option	
+61	caps+shift+option	
+61	command	
+61	control	
+62	none	
+62	shift	
+62	option	
+62	shift+option	
+62	caps	
+62	caps+shift	
+62	caps+option	
+62	caps+shift+option	
+62	command	
+62	control	
+63	none	
+63	shift	
+63	option	
+63	shift+option	
+63	caps	
+63	caps+shift	
+63	caps+option	
+63	caps+shift+option	
+63	command	
+63	control	
+64	none	
+64	shift	
+64	option	
+64	shift+option	
+64	caps	
+64	caps+shift	
+64	caps+option	
+64	caps+shift+option	
+64	command	
+64	control	
+65	none	U+002C
+65	shift	U+002C
+65	option	U+002E
+65	shift+option	U+002E
+65	caps	U+002C
+65	caps+shift	U+002C
+65	caps+option	U+002E
+65	caps+shift+option	U+002E
+65	command	U+002C
+65	control	U+002C
+66	none	U+001D
+66	shift	U+002A
+66	option	U+001D
+66	shift+option	U+002A
+66	caps	U+001D
+66	caps+shift	U+002A
+66	caps+option	U+001D
+66	caps+shift+option	U+002A
+66	command	U+001D
+66	control	U+001D
+67	none	U+002A
+67	shift	U+002A
+67	option	U+002A
+67	shift+option	U+002A
+67	caps	U+002A
+67	caps+shift	U+002A
+67	caps+option	U+002A
+67	caps+shift+option	U+002A
+67	command	U+002A
+67	control	U+002A
+68	none	
+68	shift	
+68	option	
+68	shift+option	
+68	caps	
+68	caps+shift	
+68	caps+option	
+68	caps+shift+option	
+68	command	
+68	control	
+69	none	U+002B
+69	shift	U+002B
+69	option	U+002B
+69	shift+option	U+002B
+69	caps	U+002B
+69	caps+shift	U+002B
+69	caps+option	U+002B
+69	caps+shift+option	U+002B
+69	command	U+002B
+69	control	U+002B
+70	none	U+001C
+70	shift	U+002B
+70	option	U+001C
+70	shift+option	U+002B
+70	caps	U+001C
+70	caps+shift	U+002B
+70	caps+option	U+001C
+70	caps+shift+option	U+002B
+70	command	U+001C
+70	control	U+001C
+71	none	U+001B
+71	shift	U+001B
+71	option	U+001B
+71	shift+option	U+001B
+71	caps	U+001B
+71	caps+shift	U+001B
+71	caps+option	U+001B
+71	caps+shift+option	U+001B
+71	command	U+001B
+71	control	U+001B
+72	none	U+001F
+72	shift	U+003D
+72	option	U+001F
+72	shift+option	U+003D
+72	caps	U+001F
+72	caps+shift	U+003D
+72	caps+option	U+001F
+72	caps+shift+option	U+003D
+72	command	U+001F
+72	control	U+001F
+73	none	
+73	shift	
+73	option	
+73	shift+option	
+73	caps	
+73	caps+shift	
+73	caps+option	
+73	caps+shift+option	
+73	command	
+73	control	
+74	none	
+74	shift	
+74	option	
+74	shift+option	
+74	caps	
+74	caps+shift	
+74	caps+option	
+74	caps+shift+option	
+74	command	
+74	control	
+75	none	U+002F
+75	shift	U+002F
+75	option	U+002F
+75	shift+option	U+002F
+75	caps	U+002F
+75	caps+shift	U+002F
+75	caps+option	U+002F
+75	caps+shift+option	U+002F
+75	command	U+002F
+75	control	U+002F
+76	none	U+0003
+76	shift	U+0003
+76	option	U+0003
+76	shift+option	U+0003
+76	caps	U+0003
+76	caps+shift	U+0003
+76	caps+option	U+0003
+76	caps+shift+option	U+0003
+76	command	U+0003
+76	control	U+0003
+77	none	U+001E
+77	shift	U+002F
+77	option	U+001E
+77	shift+option	U+002F
+77	caps	U+001E
+77	caps+shift	U+002F
+77	caps+option	U+001E
+77	caps+shift+option	U+002F
+77	command	U+001E
+77	control	U+001E
+78	none	U+002D
+78	shift	U+002D
+78	option	U+002D
+78	shift+option	U+002D
+78	caps	U+002D
+78	caps+shift	U+002D
+78	caps+option	U+002D
+78	caps+shift+option	U+002D
+78	command	U+002D
+78	control	U+002D
+79	none	
+79	shift	
+79	option	
+79	shift+option	
+79	caps	
+79	caps+shift	
+79	caps+option	
+79	caps+shift+option	
+79	command	
+79	control	
+80	none	
+80	shift	
+80	option	
+80	shift+option	
+80	caps	
+80	caps+shift	
+80	caps+option	
+80	caps+shift+option	
+80	command	
+80	control	
+81	none	U+003D
+81	shift	U+003D
+81	option	U+003D
+81	shift+option	U+003D
+81	caps	U+003D
+81	caps+shift	U+003D
+81	caps+option	U+003D
+81	caps+shift+option	U+003D
+81	command	U+003D
+81	control	U+003D
+82	none	U+0030
+82	shift	U+0030
+82	option	U+0030
+82	shift+option	U+0030
+82	caps	U+0030
+82	caps+shift	U+0030
+82	caps+option	U+0030
+82	caps+shift+option	U+0030
+82	command	U+0030
+82	control	U+0030
+83	none	U+0031
+83	shift	U+0031
+83	option	U+0031
+83	shift+option	U+0031
+83	caps	U+0031
+83	caps+shift	U+0031
+83	caps+option	U+0031
+83	caps+shift+option	U+0031
+83	command	U+0031
+83	control	U+0031
+84	none	U+0032
+84	shift	U+0032
+84	option	U+0032
+84	shift+option	U+0032
+84	caps	U+0032
+84	caps+shift	U+0032
+84	caps+option	U+0032
+84	caps+shift+option	U+0032
+84	command	U+0032
+84	control	U+0032
+85	none	U+0033
+85	shift	U+0033
+85	option	U+0033
+85	shift+option	U+0033
+85	caps	U+0033
+85	caps+shift	U+0033
+85	caps+option	U+0033
+85	caps+shift+option	U+0033
+85	command	U+0033
+85	control	U+0033
+86	none	U+0034
+86	shift	U+0034
+86	option	U+0034
+86	shift+option	U+0034
+86	caps	U+0034
+86	caps+shift	U+0034
+86	caps+option	U+0034
+86	caps+shift+option	U+0034
+86	command	U+0034
+86	control	U+0034
+87	none	U+0035
+87	shift	U+0035
+87	option	U+0035
+87	shift+option	U+0035
+87	caps	U+0035
+87	caps+shift	U+0035
+87	caps+option	U+0035
+87	caps+shift+option	U+0035
+87	command	U+0035
+87	control	U+0035
+88	none	U+0036
+88	shift	U+0036
+88	option	U+0036
+88	shift+option	U+0036
+88	caps	U+0036
+88	caps+shift	U+0036
+88	caps+option	U+0036
+88	caps+shift+option	U+0036
+88	command	U+0036
+88	control	U+0036
+89	none	U+0037
+89	shift	U+0037
+89	option	U+0037
+89	shift+option	U+0037
+89	caps	U+0037
+89	caps+shift	U+0037
+89	caps+option	U+0037
+89	caps+shift+option	U+0037
+89	command	U+0037
+89	control	U+0037
+90	none	
+90	shift	
+90	option	
+90	shift+option	
+90	caps	
+90	caps+shift	
+90	caps+option	
+90	caps+shift+option	
+90	command	
+90	control	
+91	none	U+0038
+91	shift	U+0038
+91	option	U+0038
+91	shift+option	U+0038
+91	caps	U+0038
+91	caps+shift	U+0038
+91	caps+option	U+0038
+91	caps+shift+option	U+0038
+91	command	U+0038
+91	control	U+0038
+92	none	U+0039
+92	shift	U+0039
+92	option	U+0039
+92	shift+option	U+0039
+92	caps	U+0039
+92	caps+shift	U+0039
+92	caps+option	U+0039
+92	caps+shift+option	U+0039
+92	command	U+0039
+92	control	U+0039
+93	none	
+93	shift	U+00B0
+93	option	U+201E
+93	shift+option	U+201C
+93	caps	
+93	caps+shift	U+00B0
+93	caps+option	U+201E
+93	caps+shift+option	U+201C
+93	command	U+005E
+93	control	U+001E
+94	none	U+003C
+94	shift	U+003E
+94	option	U+2264
+94	shift+option	U+2265
+94	caps	U+003C
+94	caps+shift	U+003E
+94	caps+option	U+2264
+94	caps+shift+option	U+2265
+94	command	U+003C
+94	control	U+003C
+95	none	
+95	shift	
+95	option	
+95	shift+option	
+95	caps	
+95	caps+shift	
+95	caps+option	
+95	caps+shift+option	
+95	command	
+95	control	
+96	none	U+0010
+96	shift	U+0010
+96	option	U+0010
+96	shift+option	U+0010
+96	caps	U+0010
+96	caps+shift	U+0010
+96	caps+option	U+0010
+96	caps+shift+option	U+0010
+96	command	U+0010
+96	control	U+0010
+97	none	U+0010
+97	shift	U+0010
+97	option	U+0010
+97	shift+option	U+0010
+97	caps	U+0010
+97	caps+shift	U+0010
+97	caps+option	U+0010
+97	caps+shift+option	U+0010
+97	command	U+0010
+97	control	U+0010
+98	none	U+0010
+98	shift	U+0010
+98	option	U+0010
+98	shift+option	U+0010
+98	caps	U+0010
+98	caps+shift	U+0010
+98	caps+option	U+0010
+98	caps+shift+option	U+0010
+98	command	U+0010
+98	control	U+0010
+99	none	U+0010
+99	shift	U+0010
+99	option	U+0010
+99	shift+option	U+0010
+99	caps	U+0010
+99	caps+shift	U+0010
+99	caps+option	U+0010
+99	caps+shift+option	U+0010
+99	command	U+0010
+99	control	U+0010
+100	none	U+0010
+100	shift	U+0010
+100	option	U+0010
+100	shift+option	U+0010
+100	caps	U+0010
+100	caps+shift	U+0010
+100	caps+option	U+0010
+100	caps+shift+option	U+0010
+100	command	U+0010
+100	control	U+0010
+101	none	U+0010
+101	shift	U+0010
+101	option	U+0010
+101	shift+option	U+0010
+101	caps	U+0010
+101	caps+shift	U+0010
+101	caps+option	U+0010
+101	caps+shift+option	U+0010
+101	command	U+0010
+101	control	U+0010
+102	none	U+0010
+102	shift	U+0010
+102	option	U+0010
+102	shift+option	U+0010
+102	caps	U+0010
+102	caps+shift	U+0010
+102	caps+option	U+0010
+102	caps+shift+option	U+0010
+102	command	U+0010
+102	control	U+0010
+103	none	U+0010
+103	shift	U+0010
+103	option	U+0010
+103	shift+option	U+0010
+103	caps	U+0010
+103	caps+shift	U+0010
+103	caps+option	U+0010
+103	caps+shift+option	U+0010
+103	command	U+0010
+103	control	U+0010
+104	none	U+0010
+104	shift	U+0010
+104	option	U+0010
+104	shift+option	U+0010
+104	caps	U+0010
+104	caps+shift	U+0010
+104	caps+option	U+0010
+104	caps+shift+option	U+0010
+104	command	U+0010
+104	control	U+0010
+105	none	U+0010
+105	shift	U+0010
+105	option	U+0010
+105	shift+option	U+0010
+105	caps	U+0010
+105	caps+shift	U+0010
+105	caps+option	U+0010
+105	caps+shift+option	U+0010
+105	command	U+0010
+105	control	U+0010
+106	none	U+0010
+106	shift	U+0010
+106	option	U+0010
+106	shift+option	U+0010
+106	caps	U+0010
+106	caps+shift	U+0010
+106	caps+option	U+0010
+106	caps+shift+option	U+0010
+106	command	U+0010
+106	control	U+0010
+107	none	U+0010
+107	shift	U+0010
+107	option	U+0010
+107	shift+option	U+0010
+107	caps	U+0010
+107	caps+shift	U+0010
+107	caps+option	U+0010
+107	caps+shift+option	U+0010
+107	command	U+0010
+107	control	U+0010
+108	none	U+0010
+108	shift	U+0010
+108	option	U+0010
+108	shift+option	U+0010
+108	caps	U+0010
+108	caps+shift	U+0010
+108	caps+option	U+0010
+108	caps+shift+option	U+0010
+108	command	U+0010
+108	control	U+0010
+109	none	U+0010
+109	shift	U+0010
+109	option	U+0010
+109	shift+option	U+0010
+109	caps	U+0010
+109	caps+shift	U+0010
+109	caps+option	U+0010
+109	caps+shift+option	U+0010
+109	command	U+0010
+109	control	U+0010
+110	none	U+0010
+110	shift	U+0010
+110	option	U+0010
+110	shift+option	U+0010
+110	caps	U+0010
+110	caps+shift	U+0010
+110	caps+option	U+0010
+110	caps+shift+option	U+0010
+110	command	U+0010
+110	control	U+0010
+111	none	U+0010
+111	shift	U+0010
+111	option	U+0010
+111	shift+option	U+0010
+111	caps	U+0010
+111	caps+shift	U+0010
+111	caps+option	U+0010
+111	caps+shift+option	U+0010
+111	command	U+0010
+111	control	U+0010
+112	none	U+0010
+112	shift	U+0010
+112	option	U+0010
+112	shift+option	U+0010
+112	caps	U+0010
+112	caps+shift	U+0010
+112	caps+option	U+0010
+112	caps+shift+option	U+0010
+112	command	U+0010
+112	control	U+0010
+113	none	U+0010
+113	shift	U+0010
+113	option	U+0010
+113	shift+option	U+0010
+113	caps	U+0010
+113	caps+shift	U+0010
+113	caps+option	U+0010
+113	caps+shift+option	U+0010
+113	command	U+0010
+113	control	U+0010
+114	none	U+0005
+114	shift	U+0005
+114	option	U+0005
+114	shift+option	U+0005
+114	caps	U+0005
+114	caps+shift	U+0005
+114	caps+option	U+0005
+114	caps+shift+option	U+0005
+114	command	U+0005
+114	control	U+0005
+115	none	U+0001
+115	shift	U+0001
+115	option	U+0001
+115	shift+option	U+0001
+115	caps	U+0001
+115	caps+shift	U+0001
+115	caps+option	U+0001
+115	caps+shift+option	U+0001
+115	command	U+0001
+115	control	U+0001
+116	none	U+000B
+116	shift	U+000B
+116	option	U+000B
+116	shift+option	U+000B
+116	caps	U+000B
+116	caps+shift	U+000B
+116	caps+option	U+000B
+116	caps+shift+option	U+000B
+116	command	U+000B
+116	control	U+000B
+117	none	U+007F
+117	shift	U+007F
+117	option	U+007F
+117	shift+option	U+007F
+117	caps	U+007F
+117	caps+shift	U+007F
+117	caps+option	U+007F
+117	caps+shift+option	U+007F
+117	command	U+007F
+117	control	U+007F
+118	none	U+0010
+118	shift	U+0010
+118	option	U+0010
+118	shift+option	U+0010
+118	caps	U+0010
+118	caps+shift	U+0010
+118	caps+option	U+0010
+118	caps+shift+option	U+0010
+118	command	U+0010
+118	control	U+0010
+119	none	U+0004
+119	shift	U+0004
+119	option	U+0004
+119	shift+option	U+0004
+119	caps	U+0004
+119	caps+shift	U+0004
+119	caps+option	U+0004
+119	caps+shift+option	U+0004
+119	command	U+0004
+119	control	U+0004
+120	none	U+0010
+120	shift	U+0010
+120	option	U+0010
+120	shift+option	U+0010
+120	caps	U+0010
+120	caps+shift	U+0010
+120	caps+option	U+0010
+120	caps+shift+option	U+0010
+120	command	U+0010
+120	control	U+0010
+121	none	U+000C
+121	shift	U+000C
+121	option	U+000C
+121	shift+option	U+000C
+121	caps	U+000C
+121	caps+shift	U+000C
+121	caps+option	U+000C
+121	caps+shift+option	U+000C
+121	command	U+000C
+121	control	U+000C
+122	none	U+0010
+122	shift	U+0010
+122	option	U+0010
+122	shift+option	U+0010
+122	caps	U+0010
+122	caps+shift	U+0010
+122	caps+option	U+0010
+122	caps+shift+option	U+0010
+122	command	U+0010
+122	control	U+0010
+123	none	U+001C
+123	shift	U+001C
+123	option	U+001C
+123	shift+option	U+001C
+123	caps	U+001C
+123	caps+shift	U+001C
+123	caps+option	U+001C
+123	caps+shift+option	U+001C
+123	command	U+001C
+123	control	U+001C
+124	none	U+001D
+124	shift	U+001D
+124	option	U+001D
+124	shift+option	U+001D
+124	caps	U+001D
+124	caps+shift	U+001D
+124	caps+option	U+001D
+124	caps+shift+option	U+001D
+124	command	U+001D
+124	control	U+001D
+125	none	U+001F
+125	shift	U+001F
+125	option	U+001F
+125	shift+option	U+001F
+125	caps	U+001F
+125	caps+shift	U+001F
+125	caps+option	U+001F
+125	caps+shift+option	U+001F
+125	command	U+001F
+125	control	U+001F
+126	none	U+001E
+126	shift	U+001E
+126	option	U+001E
+126	shift+option	U+001E
+126	caps	U+001E
+126	caps+shift	U+001E
+126	caps+option	U+001E
+126	caps+shift+option	U+001E
+126	command	U+001E
+126	control	U+001E
+127	none	
+127	shift	
+127	option	
+127	shift+option	
+127	caps	
+127	caps+shift	
+127	caps+option	
+127	caps+shift+option	
+127	command	
+127	control	

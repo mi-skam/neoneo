@@ -102,3 +102,102 @@ def load_option(path: Path) -> Dict[str, Tuple[str, str]]:
             raise ValueError(f"{where}: duplicate character {char!r}")
         table[char] = (option, shift_option)
     return table
+
+
+# Apple German dump states, in keylayout map-index order (see the plan's map table).
+STATES = [
+    "none", "shift", "command", "control", "caps",
+    "caps+shift", "caps+option", "caps+shift+option", "option", "shift+option",
+]
+
+MODIFIERS = [
+    "",
+    "anyShift",
+    "command anyShift? caps? anyOption? anyControl?",
+    "anyControl anyShift? caps? anyOption?",
+    "caps",
+    "caps anyShift",
+    "caps anyOption",
+    "caps anyShift anyOption",
+    "anyOption",
+    "anyShift anyOption",
+]
+
+# Apple ISO keyboards send the ^ key as code 10, others as code 50; the other
+# code is the < key, which Karabiner owns as Mod4. Emit the ^ row at both.
+ALIASES: Dict[int, int] = {10: 50}
+
+
+def load_base(path: Path) -> Dict[Tuple[int, str], str]:
+    """Read a dump-layout.swift TSV: (key code, state) -> output."""
+    base: Dict[Tuple[int, str], str] = {}
+    for n, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+        cols = line.split("\t")
+        if len(cols) != 3:
+            raise ValueError(f"{path}:{n}: expected 3 columns, got {len(cols)}")
+        base[(int(cols[0]), cols[1])] = "".join(chr(int(p, 16)) for p in cols[2].split("U+") if p)
+    return base
+
+
+def _control(l1: str) -> str:
+    if len(l1) == 1 and "a" <= l1 <= "z":
+        return chr(ord(l1) - ord("a") + 1)
+    return l1
+
+
+def _maps_for(key: Key, option: Dict[str, Tuple[str, str]]) -> List[str]:
+    l1, l2, l3, l4, l5, l6 = key.layers
+    opt, shift_opt = option.get(l1, (NONE, NONE))
+    return [
+        l1, l2, l1, _control(l1), l3, l5, l6,
+        NONE if is_nav(l4) else l4,
+        opt, shift_opt,
+    ]
+
+
+def _xml_escape(s: str) -> str:
+    return "".join(
+        f"&#x{ord(c):04X};" if ord(c) < 0x20 or ord(c) == 0x7F or c in "<>&\"'" else c
+        for c in s
+    )
+
+
+def keylayout_xml(
+    keys: List[Key],
+    option: Dict[str, Tuple[str, str]],
+    base: Dict[Tuple[int, str], str],
+) -> str:
+    rows: Dict[int, List[str]] = {}
+    for key in keys:
+        rows[key.code] = _maps_for(key, option)
+        if key.code in ALIASES:
+            rows[ALIASES[key.code]] = rows[key.code]
+    for code in sorted({c for c, _ in base} - set(rows)):
+        rows[code] = [base[(code, s)] for s in STATES]
+    maxout = max(len(v.encode("utf-16-le")) // 2 for r in rows.values() for v in r)
+    lines = [
+        '<?xml version="1.1" encoding="UTF-8"?>',
+        '<!DOCTYPE keyboard SYSTEM "file://localhost/System/Library/DTDs/KeyboardLayout.dtd">',
+        f'<keyboard group="126" id="-24601" name="neoneo" maxout="{max(maxout, 1)}">',
+        "  <layouts>",
+        '    <layout first="0" last="255" mapSet="ANSI" modifiers="Modifiers"/>',
+        "  </layouts>",
+        '  <modifierMap id="Modifiers" defaultIndex="0">',
+    ]
+    for i, mods in enumerate(MODIFIERS):
+        lines.append(f'    <keyMapSelect mapIndex="{i}"><modifier keys="{mods}"/></keyMapSelect>')
+    lines += ["  </modifierMap>", '  <keyMapSet id="ANSI">']
+    for i in range(len(MODIFIERS)):
+        lines.append(f'    <keyMap index="{i}">')
+        for code in sorted(rows):
+            lines.append(f'      <key code="{code}" output="{_xml_escape(rows[code][i])}"/>')
+        lines.append("    </keyMap>")
+    lines += ["  </keyMapSet>", "</keyboard>", ""]
+    return "\n".join(lines)
+
+
+def write_keylayout(out: Path, xml: str) -> Path:
+    out.mkdir(parents=True, exist_ok=True)
+    path = out / "neoneo.keylayout"
+    path.write_text(xml, encoding="utf-8")
+    return path

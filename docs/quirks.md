@@ -73,3 +73,15 @@ Option+Control fallback).
 Trap: System Settings > Keyboard > Modifier Keys sets Caps Lock to "No Action"
 on the internal keyboard (1452/835). Karabiner bypasses this while running;
 without Karabiner, Caps Lock does nothing on that keyboard.
+
+## Full layout v0.1
+
+Installed with `make install` (standalone `neoneo.keylayout`, input source ID
+`org.unknown.keylayout.neoneo`, added to `AppleEnabledInputSources`), then log
+out and in and enable both "neoneo" rules in Karabiner.
+
+`make verify` (automated, 2026-11-16): ok, all 128 key codes × 10 states match
+the TSV.
+
+Hand checks on the full layout (repeat the spike checks with the real keys):
+_pending_.

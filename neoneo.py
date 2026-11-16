@@ -162,11 +162,12 @@ def _xml_escape(s: str) -> str:
     )
 
 
-def keylayout_xml(
+def expected_rows(
     keys: List[Key],
     option: Dict[str, Tuple[str, str]],
     base: Dict[Tuple[int, str], str],
-) -> str:
+) -> Dict[int, List[str]]:
+    """Key code -> output per map index (same order as STATES)."""
     rows: Dict[int, List[str]] = {}
     for key in keys:
         rows[key.code] = _maps_for(key, option)
@@ -174,6 +175,15 @@ def keylayout_xml(
             rows[ALIASES[key.code]] = rows[key.code]
     for code in sorted({c for c, _ in base} - set(rows)):
         rows[code] = [base[(code, s)] for s in STATES]
+    return rows
+
+
+def keylayout_xml(
+    keys: List[Key],
+    option: Dict[str, Tuple[str, str]],
+    base: Dict[Tuple[int, str], str],
+) -> str:
+    rows = expected_rows(keys, option, base)
     maxout = max(len(v.encode("utf-16-le")) // 2 for r in rows.values() for v in r)
     lines = [
         '<?xml version="1.1" encoding="UTF-8"?>',
@@ -297,12 +307,30 @@ def karabiner_rules(keys: List[Key]) -> dict:
     }
 
 
+def verify(dump: Path, rows: Dict[int, List[str]]) -> List[str]:
+    """Compare a dump of the installed layout with the expected rows."""
+    got = load_base(dump)
+    problems: List[str] = []
+    for code, outs in sorted(rows.items()):
+        for state, want in zip(STATES, outs):
+            if (code, state) not in got:
+                problems.append(f"{code}\t{state}\tmissing from dump")
+            elif got[(code, state)] != want:
+                problems.append(f"{code}\t{state}\twant {want!r}, got {got[(code, state)]!r}")
+    return problems
+
+
+def _sources() -> Tuple[List[Key], Dict[str, Tuple[str, str]], Dict[Tuple[int, str], str]]:
+    layout = ROOT / "layout"
+    return (load_layout(layout / "neoneo.tsv"), load_option(layout / "option-de.tsv"),
+            load_base(layout / "apple-german.tsv"))
+
+
 def build(out: Path) -> None:
     import json
 
-    layout = ROOT / "layout"
-    keys = load_layout(layout / "neoneo.tsv")
-    xml = keylayout_xml(keys, load_option(layout / "option-de.tsv"), load_base(layout / "apple-german.tsv"))
+    keys, option, base = _sources()
+    xml = keylayout_xml(keys, option, base)
     write_keylayout(out, xml)
     (out / "karabiner-neoneo.json").write_text(
         json.dumps(karabiner_rules(keys), indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
@@ -318,9 +346,19 @@ def main(argv: List[str]) -> int:
     sub = parser.add_subparsers(dest="command", required=True)
     b = sub.add_parser("build", help="write neoneo.keylayout and karabiner-neoneo.json")
     b.add_argument("--out", type=Path, required=True)
+    v = sub.add_parser("verify", help="compare a dump-layout.swift dump with the TSV")
+    v.add_argument("dump", type=Path)
     args = parser.parse_args(argv)
     if args.command == "build":
         build(args.out)
+        return 0
+    problems = verify(args.dump, expected_rows(*_sources()))
+    for p in problems:
+        print(p)
+    if problems:
+        print(f"{len(problems)} mismatches")
+        return 1
+    print("ok")
     return 0
 
 

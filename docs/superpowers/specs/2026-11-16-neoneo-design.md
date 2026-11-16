@@ -186,7 +186,7 @@ passes, or after the fallback is chosen.
   is authoritative (a regular file, not written by home-manager). neoneo's
   rule goes into the selected Default profile next to the Neo2 rules; every
   rule is conditioned on neoneo's input source, the Neo2 rules on the Neo
-  bundle ids, so they never both fire. `just install` copies the asset file;
+  bundle ids, so they never both fire. `make install` copies the asset file;
   enabling it in Karabiner's UI is a manual step. Bundle id
   `com.mi-skam.keylayout.neoneo`, outside the `org.sil.ukelele…neo` regex.
 - **Layer-4 navigation passes modifiers through** (my call, Neo standard):

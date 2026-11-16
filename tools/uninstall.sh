@@ -30,20 +30,6 @@ rm -f "$karabiner_dir/assets/complex_modifications/neoneo.json"
 rm -rf "$layouts/neoneo.bundle"
 
 # Drop neoneo from the enabled input sources and the history.
-prefs=$(mktemp)
-defaults export com.apple.HIToolbox "$prefs"
-for list in AppleEnabledInputSources AppleInputSourceHistory; do
-    count=$(plutil -extract "$list" raw "$prefs" 2>/dev/null) || continue
-    i=$((count - 1))
-    while [ "$i" -ge 0 ]; do
-        name=$(plutil -extract "$list.$i.KeyboardLayout Name" raw "$prefs" 2>/dev/null) || name=
-        if [ "$name" = neoneo ]; then
-            plutil -remove "$list.$i" "$prefs"
-        fi
-        i=$((i - 1))
-    done
-done
-defaults import com.apple.HIToolbox "$prefs"
-rm -f "$prefs"
+sh "$here/remove-input-source.sh" com.apple.HIToolbox neoneo
 
 echo "neoneo removed. Log out and in."

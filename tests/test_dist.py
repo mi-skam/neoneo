@@ -31,7 +31,8 @@ class DistTest(unittest.TestCase):
         names = sorted(p.name for p in self.folder.iterdir())
         self.assertEqual(names, [
             "README.md", "install.sh", "karabiner-config.js", "karabiner-neoneo.json",
-            "neoneo-capslockdelay", "neoneo.bundle", "neoneo.capslockdelay.plist", "uninstall.sh",
+            "neoneo-capslockdelay", "neoneo.bundle", "neoneo.capslockdelay.plist",
+            "remove-input-source.sh", "uninstall.sh",
         ])
         info = plistlib.loads((self.folder / "neoneo.bundle" / "Contents" / "Info.plist").read_bytes())
         self.assertEqual(info["CFBundleVersion"], VERSION)
@@ -47,7 +48,7 @@ class DistTest(unittest.TestCase):
         self.assertIn("Application Support/neoneo", text)
 
     def test_scripts_executable_and_valid_sh(self):
-        for name in ("install.sh", "uninstall.sh"):
+        for name in ("install.sh", "uninstall.sh", "remove-input-source.sh"):
             with self.subTest(name):
                 path = self.folder / name
                 self.assertTrue(os.access(path, os.X_OK))
@@ -66,6 +67,11 @@ class DistTest(unittest.TestCase):
     def test_uninstall_refuses_while_neoneo_selected(self):
         text = (self.folder / "uninstall.sh").read_text()
         self.assertIn("AppleSelectedInputSources", text)
+
+    def test_uninstall_edits_only_the_input_source_lists(self):
+        text = (self.folder / "uninstall.sh").read_text()
+        self.assertIn('remove-input-source.sh" com.apple.HIToolbox neoneo', text)
+        self.assertNotIn("defaults import", text)
 
     def test_uninstall_removes_karabiner_rules(self):
         text = (self.folder / "uninstall.sh").read_text()

@@ -102,6 +102,16 @@ class KeylayoutTest(unittest.TestCase):
         self.assertEqual(outputs(ROOT_EL, 0)[36], "\r")
         self.assertEqual(outputs(ROOT_EL, 0)[123], BASE[(123, "none")])
 
+    def test_write_bundle_drops_stale_files(self):
+        out = Path(tempfile.mkdtemp())
+        icns = out / "in.icns"
+        icns.write_bytes(b"icns")
+        stale = out / "neoneo.bundle" / "Contents" / "Resources" / "old.keylayout"
+        stale.parent.mkdir(parents=True)
+        stale.write_text("old", encoding="utf-8")
+        write_bundle(out, "<keyboard/>", icns)
+        self.assertFalse(stale.exists())
+
     def test_write_bundle(self):
         out = Path(tempfile.mkdtemp())
         icns = out / "in.icns"

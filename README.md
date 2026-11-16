@@ -5,7 +5,7 @@ Option, Command and Control behave as on every other macOS layout. It is a
 generated keylayout plus a small set of Karabiner-Elements rules; Mod3 and Mod4
 reach the keylayout through the Caps Lock state.
 
-**Version 0.1.1.** Layers 1–6 on ISO keyboards. Not yet: dead keys (typed as plain
+**Version 0.1.2.** Layers 1–6 on ISO keyboards. Not yet: dead keys (typed as plain
 characters), Shift lock, Mod4 lock.
 
 ## Install
@@ -16,7 +16,7 @@ least once.
 1. Download `neoneo-<version>.zip` from the
    [releases](../../releases), unpack it, and in Terminal run:
    ```sh
-   sh ~/Downloads/neoneo-0.1.1/install.sh
+   sh ~/Downloads/neoneo-0.1.2/install.sh
    ```
 2. Log out and in, or restart. **neoneo** appears in the input menu with an
    "nn" icon (System Settings > Keyboard > Input Sources lists it under German).
@@ -105,8 +105,8 @@ tag. GitHub Actions runs the tests and publishes the zip.
 - `layout/apple-german.tsv`, `layout/option-de.tsv`: Apple German, for Option
   and for keys outside the Neo table.
 - `layout/neoneo.icns`: the menu bar icon (`make icon` redraws it).
-- `tools/install.sh`, `tools/uninstall.sh`, `tools/karabiner-config.js`: the
-  install scripts shipped in the release.
+- `tools/install.sh`, `tools/uninstall.sh`, `tools/karabiner-config.js`,
+  `tools/remove-input-source.sh`: the install scripts shipped in the release.
 - `tools/capslockdelay.swift`, `tools/neoneo.capslockdelay.plist`: the Caps
   Lock delay helper and its launch agent (`make helper` builds it).
 - `.github/workflows/release.yml`: tests on every push; the release on a tag.

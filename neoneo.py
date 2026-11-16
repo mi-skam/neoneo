@@ -210,7 +210,7 @@ def keylayout_xml(
 # (KLInfo TISInputSourceID is ignored).
 BUNDLE_ID = "xyz.miskam.keyboardlayout.neoneo"
 INPUT_SOURCE = BUNDLE_ID + ".keylayout.neoneo"
-VERSION = "0.1"
+VERSION = "0.1.1"
 
 
 def write_bundle(out: Path, xml: str, icns: Path) -> Path:
@@ -363,8 +363,10 @@ def build(out: Path) -> None:
         json.dumps(karabiner_rules(keys), indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
 
-def dist(out: Path) -> Path:
-    """Assemble the release folder out/neoneo-<VERSION> from scratch."""
+def dist(out: Path, helper: Path) -> Path:
+    """Assemble the release folder out/neoneo-<VERSION> from scratch.
+
+    helper is the compiled neoneo-capslockdelay (built by `make helper`)."""
     import shutil
 
     folder = out / f"neoneo-{VERSION}"
@@ -374,6 +376,9 @@ def dist(out: Path) -> Path:
     build(folder)
     shutil.copyfile(ROOT / "tools" / "neoneo.capslockdelay.plist", folder / "neoneo.capslockdelay.plist")
     shutil.copyfile(ROOT / "README.md", folder / "README.md")
+    shutil.copyfile(ROOT / "tools" / "karabiner-config.js", folder / "karabiner-config.js")
+    shutil.copyfile(helper, folder / "neoneo-capslockdelay")
+    (folder / "neoneo-capslockdelay").chmod(0o755)
     for script in ("install.sh", "uninstall.sh"):
         shutil.copyfile(ROOT / "tools" / script, folder / script)
         (folder / script).chmod(0o755)
@@ -392,6 +397,7 @@ def main(argv: List[str]) -> int:
     b.add_argument("--out", type=Path, required=True)
     d = sub.add_parser("dist", help="assemble the release folder neoneo-<version>")
     d.add_argument("--out", type=Path, required=True)
+    d.add_argument("--helper", type=Path, required=True)
     v = sub.add_parser("verify", help="compare a dump-layout.swift dump with the TSV")
     v.add_argument("dump", type=Path)
     sub.add_parser("version", help="print the version")
@@ -400,7 +406,7 @@ def main(argv: List[str]) -> int:
         build(args.out)
         return 0
     if args.command == "dist":
-        print(dist(args.out))
+        print(dist(args.out, args.helper))
         return 0
     if args.command == "version":
         print(VERSION)

@@ -86,3 +86,19 @@ def load_layout(path: Path) -> List[Key]:
         l1, l2, l3, l4, l5, l6 = (_decode(v, where) for v in cols[2:])
         keys.append(Key(code, name, (l1, l2, l3, l4, l5, l6)))
     return keys
+
+
+def load_option(path: Path) -> Dict[str, Tuple[str, str]]:
+    table: Dict[str, Tuple[str, str]] = {}
+    for n, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+        if not line or line.startswith("#"):
+            continue
+        where = f"{path}:{n}"
+        cols = line.split("\t")
+        if len(cols) != 3:
+            raise ValueError(f"{where}: expected 3 columns, got {len(cols)}")
+        char, option, shift_option = (_decode(v, where) for v in cols)
+        if char in table:
+            raise ValueError(f"{where}: duplicate character {char!r}")
+        table[char] = (option, shift_option)
+    return table

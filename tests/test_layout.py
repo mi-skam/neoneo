@@ -8,9 +8,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from neoneo import NAV, NONE, load_layout  # noqa: E402
+from neoneo import NAV, NONE, load_layout, load_option  # noqa: E402
 
 TSV = ROOT / "layout" / "neoneo.tsv"
+OPTION_TSV = ROOT / "layout" / "option-de.tsv"
 
 
 def write_tsv(text: str) -> Path:
@@ -53,6 +54,12 @@ class LayoutTest(unittest.TestCase):
             with self.subTest(label):
                 with self.assertRaises(ValueError):
                     load_layout(write_tsv(text))
+
+    def test_option_reference(self):
+        opt = load_option(OPTION_TSV)
+        self.assertEqual(opt["l"], ("@", "ﬂ"))
+        self.assertEqual(opt["5"][0], "[")
+        self.assertEqual(opt["e"][0], "€")
 
 
 if __name__ == "__main__":

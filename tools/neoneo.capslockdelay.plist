@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <!--
-  Sets the Caps Lock delay of Karabiner's virtual keyboard to 0.
-  macOS delays Caps Lock on Apple-vendor keyboards; the virtual keyboard
-  reports Apple's vendor id, so without this a fast Mod3+key types the
-  layer-1 character. The setting is lost when Karabiner restarts, so the
-  agent sets it at login and again every 30 seconds (idempotent, one
-  hidutil call).
+  Starts neoneo-capslockdelay whenever Karabiner's virtual keyboard appears
+  (at login, on Karabiner restarts and updates); the helper turns off the
+  Caps Lock delay for it and exits. No polling.
+  install.sh replaces __HELPER__ with the helper's absolute path.
 -->
 <plist version="1.0">
 <dict>
@@ -14,18 +12,24 @@
 	<string>neoneo.capslockdelay</string>
 	<key>ProgramArguments</key>
 	<array>
-		<string>/usr/bin/hidutil</string>
-		<string>property</string>
-		<string>--matching</string>
-		<string>{"ProductID":0x250,"VendorID":0x5ac}</string>
-		<string>--set</string>
-		<string>{"CapsLockDelayOverride":0}</string>
+		<string>__HELPER__</string>
 	</array>
-	<key>RunAtLoad</key>
-	<true/>
-	<key>StartInterval</key>
-	<integer>30</integer>
-	<key>StandardOutPath</key>
-	<string>/dev/null</string>
+	<key>LaunchEvents</key>
+	<dict>
+		<key>com.apple.iokit.matching</key>
+		<dict>
+			<key>karabiner-virtual-keyboard</key>
+			<dict>
+				<key>IOProviderClass</key>
+				<string>IOHIDDevice</string>
+				<key>VendorID</key>
+				<integer>1452</integer>
+				<key>ProductID</key>
+				<integer>592</integer>
+				<key>IOMatchLaunchStream</key>
+				<true/>
+			</dict>
+		</dict>
+	</dict>
 </dict>
 </plist>

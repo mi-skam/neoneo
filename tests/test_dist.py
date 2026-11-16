@@ -13,12 +13,16 @@ sys.path.insert(0, str(ROOT))
 
 from neoneo import VERSION, dist  # noqa: E402
 
+HELPER_BYTES = b"\xcf\xfa\xed\xfe fake helper"
+
 
 class DistTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.out = Path(tempfile.mkdtemp())
-        cls.folder = dist(cls.out)
+        helper = cls.out / "helper-in"
+        helper.write_bytes(HELPER_BYTES)
+        cls.folder = dist(cls.out, helper)
 
     def test_folder_name_carries_version(self):
         self.assertEqual(self.folder, self.out / f"neoneo-{VERSION}")
@@ -27,10 +31,20 @@ class DistTest(unittest.TestCase):
         names = sorted(p.name for p in self.folder.iterdir())
         self.assertEqual(names, [
             "README.md", "install.sh", "karabiner-config.js", "karabiner-neoneo.json",
-            "neoneo.bundle", "neoneo.capslockdelay.plist", "uninstall.sh",
+            "neoneo-capslockdelay", "neoneo.bundle", "neoneo.capslockdelay.plist", "uninstall.sh",
         ])
         info = plistlib.loads((self.folder / "neoneo.bundle" / "Contents" / "Info.plist").read_bytes())
         self.assertEqual(info["CFBundleVersion"], VERSION)
+
+    def test_helper_shipped_executable(self):
+        helper = self.folder / "neoneo-capslockdelay"
+        self.assertEqual(helper.read_bytes(), HELPER_BYTES)
+        self.assertTrue(os.access(helper, os.X_OK))
+
+    def test_install_points_agent_at_installed_helper(self):
+        text = (self.folder / "install.sh").read_text()
+        self.assertIn("__HELPER__", text)
+        self.assertIn("Application Support/neoneo", text)
 
     def test_scripts_executable_and_valid_sh(self):
         for name in ("install.sh", "uninstall.sh"):

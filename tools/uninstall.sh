@@ -18,6 +18,7 @@ fi
 
 launchctl bootout "gui/$(id -u)" "$agent" 2>/dev/null || true
 rm -f "$agent"
+rm -rf "$HOME/Library/Application Support/neoneo"
 
 # Karabiner: remove the rules from every profile (device settings stay).
 if [ -f "$karabiner_conf" ]; then

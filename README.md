@@ -29,9 +29,11 @@ least once.
 - the two neoneo rules, first in Karabiner's selected profile, and "Manipulate
   caps lock LED" off for the Apple keyboards, so the LED stays dark on Mod3.
   It saves the previous `karabiner.json` as `karabiner.json.before-neoneo`;
-- a login agent that keeps macOS's Caps Lock delay off for Karabiner's virtual
-  keyboard (without it a fast Mod3+key sometimes types the layer-1 character).
-  It reapplies the setting every 30 seconds, so it survives Karabiner restarts.
+- a small helper, `~/Library/Application Support/neoneo/neoneo-capslockdelay`,
+  that keeps macOS's Caps Lock delay off for Karabiner's virtual keyboard
+  (without it a fast Mod3+key sometimes types the layer-1 character). launchd
+  starts it only when that keyboard appears (login, Karabiner restart or
+  update); it applies the setting and exits. Nothing runs in between.
 
 **Updating:** run the new version's `install.sh`, then log out and in. It
 replaces the old neoneo rules in Karabiner.
@@ -105,6 +107,8 @@ tag. GitHub Actions runs the tests and publishes the zip.
 - `layout/neoneo.icns`: the menu bar icon (`make icon` redraws it).
 - `tools/install.sh`, `tools/uninstall.sh`, `tools/karabiner-config.js`: the
   install scripts shipped in the release.
+- `tools/capslockdelay.swift`, `tools/neoneo.capslockdelay.plist`: the Caps
+  Lock delay helper and its launch agent (`make helper` builds it).
 - `.github/workflows/release.yml`: tests on every push; the release on a tag.
 - [Design](docs/superpowers/specs/2026-11-16-neoneo-design.md),
   [macOS quirks and hand-checked results](docs/quirks.md).

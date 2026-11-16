@@ -8,6 +8,7 @@ layouts="$HOME/Library/Keyboard Layouts"
 karabiner_dir="$HOME/.config/karabiner"
 karabiner_conf="$karabiner_dir/karabiner.json"
 agent="$HOME/Library/LaunchAgents/neoneo.capslockdelay.plist"
+support="$HOME/Library/Application Support/neoneo"
 
 if [ ! -f "$karabiner_conf" ]; then
     echo "Karabiner-Elements is not set up yet ($karabiner_conf is missing)." >&2
@@ -37,9 +38,13 @@ if ! defaults read com.apple.HIToolbox AppleEnabledInputSources 2>/dev/null \
         '<dict><key>InputSourceKind</key><string>Keyboard Layout</string><key>KeyboardLayout ID</key><integer>-24601</integer><key>KeyboardLayout Name</key><string>neoneo</string></dict>'
 fi
 
-# Login agent: keep the Caps Lock delay of Karabiner's virtual keyboard at 0.
-cp "$here/neoneo.capslockdelay.plist" "$agent"
-xattr -c "$agent"
+# Caps Lock delay: launchd starts the helper whenever Karabiner's virtual
+# keyboard appears. The agent needs the helper's absolute path.
+mkdir -p "$support"
+cp "$here/neoneo-capslockdelay" "$support/neoneo-capslockdelay"
+chmod 755 "$support/neoneo-capslockdelay"
+xattr -c "$support/neoneo-capslockdelay"
+sed "s#__HELPER__#$support/neoneo-capslockdelay#" "$here/neoneo.capslockdelay.plist" > "$agent"
 launchctl bootout "gui/$(id -u)" "$agent" 2>/dev/null || true
 launchctl bootstrap "gui/$(id -u)" "$agent"
 

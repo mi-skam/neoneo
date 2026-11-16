@@ -105,15 +105,23 @@ sometimes typed the layer-1 character. Cause: macOS delays Caps Lock on
 Apple-vendor keyboards, and Karabiner's virtual keyboard reports Apple's vendor
 id (0x5ac/0x250), so the Caps state came on after the next key. Fix:
 `CapsLockDelayOverride = 0` on the virtual keyboard via `hidutil`; the value is
-lost on reboot and Karabiner restart, so `make install` adds the login agent
-`neoneo.capslockdelay`, which sets it at login and every 30 seconds. After the
-fix: no more literal characters (operator).
+lost whenever Karabiner creates the device anew. After the fix: no more
+literal characters (operator).
 
-Why a timer, not a device trigger (2026-11-17): a launchd `LaunchEvents`
-IOKit-matching job on the virtual keyboard (vendor 1452, product 592) was
-relaunched every 10 seconds, because a plain shell job cannot consume the XPC
-event. Doing it properly needs a compiled helper; a 30-second `StartInterval`
-running one idempotent `hidutil --set` is simpler.
+When the value is lost (measured 2026-11-17): a Karabiner restart creates a new
+virtual keyboard (registry id 10000370c → 100003af0) and the value is gone, as
+at login. So a login-only agent is not enough.
+
+How it is kept (2026-11-17): the agent `neoneo.capslockdelay` has a launchd
+`LaunchEvents` IOKit-matching trigger on the virtual keyboard (IOHIDDevice,
+vendor 1452, product 592) and runs the compiled helper
+`neoneo-capslockdelay`. The helper takes the event with
+`xpc_set_event_stream_handler`, runs `hidutil --set` (again after 1 s and 3 s)
+and exits after 5 s idle. Checked: one run at install, one run per Karabiner
+restart, value 0 on the new device; nothing runs in between.
+
+Rejected: a shell script as the matching job is relaunched every 10 s (it
+cannot take the XPC event), and a 30-second timer polls all day for a rare event.
 
 Karabiner config at install (2026-11-17): `install.sh` writes the neoneo rules
 into the selected profile of `karabiner.json` (JavaScript for Automation, so no

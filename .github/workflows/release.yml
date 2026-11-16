@@ -15,7 +15,7 @@ jobs:
   test:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - run: make test
 
   release:
@@ -23,7 +23,7 @@ jobs:
     needs: test
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Tag matches VERSION
         run: test "$GITHUB_REF_NAME" = "v$(python3 neoneo.py version)"
       - run: make dist

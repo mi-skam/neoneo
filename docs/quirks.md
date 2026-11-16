@@ -84,6 +84,16 @@ the TSV.
 Hand checks on the full layout (repeat the mechanism checks with the real keys):
 _pending_.
 
+Caps Lock delay (found 2026-11-16 on the full layout): a fast Mod3+key
+sometimes typed the layer-1 character. Cause: macOS delays Caps Lock on
+Apple-vendor keyboards, and Karabiner's virtual keyboard reports Apple's vendor
+id (0x5ac/0x250), so the Caps state came on after the next key. Fix:
+`CapsLockDelayOverride = 0` on the virtual keyboard via `hidutil`; the value is
+lost on reboot and Karabiner restart, so `make install` adds the login agent
+`neoneo.capslockdelay`, which sets it at login. After the fix: no more literal
+characters (operator). After a Karabiner restart without logout, rerun it with
+`launchctl kickstart -k gui/$(id -u)/neoneo.capslockdelay`.
+
 Apps that read key codes instead of the layout for shortcuts (no per-app
 remaps in v0.1; listed here per the spec):
 

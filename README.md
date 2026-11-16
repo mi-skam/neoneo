@@ -20,6 +20,10 @@ Then log out and in, select **neoneo** in the input menu, and enable both
 profile). `make verify` checks the installed layout against the source table.
 `make uninstall` removes it again.
 
+`make install` also adds a login agent that turns off macOS's Caps Lock delay
+for Karabiner's virtual keyboard; without it a fast Mod3+key sometimes types
+the layer-1 character (see [quirks](docs/quirks.md)).
+
 ## Modifiers
 
 | Modifier | Keys                                        | Layers         |

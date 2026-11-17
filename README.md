@@ -90,6 +90,9 @@ tag. GitHub Actions runs the tests and publishes the zip.
 - Apps that match shortcuts by physical key position instead of the layout
   (some Electron/Chromium apps and terminal programs) keep their shortcuts on
   the QWERTZ keys. Seen: hrdx.
+- Terminal programs that turn on the kitty keyboard protocol without asking
+  for the typed text get the layer-1 character on Mod3. Seen: atuin's search
+  box in Ghostty.
 - Measured keyboards: Apple internal and Magic Keyboard (both swap the `^` and
   `<` key codes; handled). Other ISO keyboards are expected to work but are not
   measured yet.

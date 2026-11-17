@@ -135,9 +135,10 @@ The on-screen Caps Lock symbol (shown with the internal keyboard) is hidden by
 (operator, 2026-11-16). System-wide: it also hides the input-source popup.
 Undo: `defaults delete kCFPreferencesAnyApplication TSMLanguageIndicatorEnabled`.
 
-Apps that read key codes instead of the layout for shortcuts (no per-app
-remaps in v0.1; listed here per the spec):
+Apps that read keys instead of the layout's text (no per-app remaps in v0.1;
+listed here per the spec):
 
 | App | Observed | Cause |
 |-----|----------|-------|
 | hrdx | Ctrl+B fires on the key printed `b` (Neo `z`), not on the Neo `b` key | Ctrl shortcuts matched by physical key position (key code 11), as with the old Neo2 setup |
+| atuin 18.24.5 in Ghostty | In the search box Mod3+`t` types `t`, not `-` (operator, 2026-11-17) | atuin turns on the kitty keyboard protocol with "report all keys as escape codes" but without "report associated text". The terminal then sends the key (`t`) with Caps Lock as a modifier flag instead of the layout's text, and atuin inserts the key. Read from atuin's source and the protocol spec; the bytes Ghostty sends were not captured. In Terminal.app, which does not support the protocol, the same keys type `-` (operator, 2026-11-17). atuin has no setting for this |

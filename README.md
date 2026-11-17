@@ -90,6 +90,10 @@ tag. GitHub Actions runs the tests and publishes the zip.
 - Apps that match shortcuts by physical key position instead of the layout
   (some Electron/Chromium apps and terminal programs) keep their shortcuts on
   the QWERTZ keys. Seen: hrdx.
+- Terminal programs that turn on the kitty keyboard protocol without asking
+  for the typed text get the layer-1 character on Mod3. Seen: atuin's search
+  box in Ghostty. Workaround: `tools/nokitty.py`, see
+  [quirks](docs/quirks.md).
 - Measured keyboards: Apple internal and Magic Keyboard (both swap the `^` and
   `<` key codes; handled). Other ISO keyboards are expected to work but are not
   measured yet.
@@ -109,6 +113,8 @@ tag. GitHub Actions runs the tests and publishes the zip.
   `tools/remove-input-source.sh`: the install scripts shipped in the release.
 - `tools/capslockdelay.swift`, `tools/neoneo.capslockdelay.plist`: the Caps
   Lock delay helper and its launch agent (`make helper` builds it).
+- `tools/nokitty.py`: runs a terminal program with the kitty keyboard protocol
+  kept off (not in the release zip).
 - `.github/workflows/release.yml`: tests on every push; the release on a tag.
 - [Design](docs/superpowers/specs/2026-11-16-neoneo-design.md),
   [macOS quirks and hand-checked results](docs/quirks.md).

@@ -141,4 +141,24 @@ listed here per the spec):
 | App | Observed | Cause |
 |-----|----------|-------|
 | hrdx | Ctrl+B fires on the key printed `b` (Neo `z`), not on the Neo `b` key | Ctrl shortcuts matched by physical key position (key code 11), as with the old Neo2 setup |
-| atuin 18.24.5 in Ghostty | In the search box Mod3+`t` types `t`, not `-` (operator, 2026-11-17) | atuin turns on the kitty keyboard protocol with "report all keys as escape codes" but without "report associated text". The terminal then sends the key (`t`) with Caps Lock as a modifier flag instead of the layout's text, and atuin inserts the key. The flags are read from atuin's source. Measured with the same flags (13) in Ghostty: Mod3+`t` arrives as `ESC [ 116 :: 108 ; 65 u`, that is key `t`, US-layout key `l`, Caps Lock bit, no text. With "report associated text" added (flags 29) Ghostty appends the text: `ESC [ 116 :: 108 ; 65 ; 45 u`, 45 being `-` (operator, 2026-11-17). In Terminal.app, which does not support the protocol, the same keys type `-` (operator, 2026-11-17). atuin has no setting for this. Reported upstream 2026-11-17: [atuin#1926](https://github.com/atuinsh/atuin/issues/1926#issuecomment-6948199155); the text flag is not in crossterm yet ([crossterm#965](https://github.com/crossterm-rs/crossterm/issues/965)) |
+| atuin 18.24.5 in Ghostty | In the search box Mod3+`t` types `t`, not `-` (operator, 2026-11-17) | atuin turns on the kitty keyboard protocol with "report all keys as escape codes" but without "report associated text". The terminal then sends the key (`t`) with Caps Lock as a modifier flag instead of the layout's text, and atuin inserts the key. The flags are read from atuin's source. Measured with the same flags (13) in Ghostty: Mod3+`t` arrives as `ESC [ 116 :: 108 ; 65 u`, that is key `t`, US-layout key `l`, Caps Lock bit, no text. With "report associated text" added (flags 29) Ghostty appends the text: `ESC [ 116 :: 108 ; 65 ; 45 u`, 45 being `-` (operator, 2026-11-17). In Terminal.app, which does not support the protocol, the same keys type `-` (operator, 2026-11-17). atuin has no setting for this, and neither has Ghostty 1.4.0. Workaround: `tools/nokitty.py` (below). Reported upstream 2026-11-17: [atuin#1926](https://github.com/atuinsh/atuin/issues/1926#issuecomment-6948199155); the text flag is not in crossterm yet ([crossterm#965](https://github.com/crossterm-rs/crossterm/issues/965)) |
+
+Workaround for these terminal programs (2026-11-17): `tools/nokitty.py <command>`
+runs the command on a private pseudo-terminal and passes everything through
+except the requests that switch the kitty keyboard protocol on, off or to other
+flags, so the program gets the layout's text. A filter on the output is not
+enough: atuin writes its screen to `/dev/tty` even when its output is a pipe.
+Streams that are not a terminal are handed on unchanged, so the zsh widget
+still gets the selected command. Checked: with the function below, Mod3+`t`
+types `-` in atuin's search box in Ghostty (operator); the start costs about
+0.04 s. Not checked: window resizing and mouse input through the wrapper.
+
+```zsh
+atuin() {
+  if [[ $1 == search && ${@[(I)-i]} -gt 0 ]]; then
+    python3 /path/to/neoneo/tools/nokitty.py atuin "$@"
+  else
+    command atuin "$@"
+  fi
+}
+```
